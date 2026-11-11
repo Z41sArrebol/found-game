@@ -64,6 +64,7 @@ npm run dev:desktop
 | `dist/content.js` | 当前剧情文本、调查问题、资料和结局 |
 | `dist/engine.js` | 证据条件、节点推进、搜索与存档逻辑 |
 | `dist/app.js` | 调查应用的交互逻辑，同时保留早期桌面原型 |
+| `dist/sim.css` | 面板拟真皮肤（微信/OneNote/Edge/照片查看器/测量软件），仅面板模式生效 |
 | `dist/assets/` | 游戏影像素材的编辑源目录 |
 | `scripts/integrate-daedalos.mjs` | 内容同步、窗口内容样式、快捷方式与进程注册 |
 | `desktop/components/apps/CaseApp/` | 游戏应用与 daedalOS 原生窗口的通信桥接 |

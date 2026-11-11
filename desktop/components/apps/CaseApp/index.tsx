@@ -61,7 +61,7 @@ const CaseApp: FC<ComponentProcessProps> = ({ id }) => {
     <iframe
       ref={iframe}
       src={src}
-      title={pane === "reader" ? "调查档案" : ({chat:"陆遥的聊天",notes:"调查便签",browser:"芦苇搜索",space:"空间复核"}[pane] || "调查应用")}
+      title={pane === "reader" ? "调查档案" : ({chat:"微信",notes:"调查便签",browser:"芦苇搜索",space:"空间复核"}[pane] || "调查应用")}
       style={{ display:"block", width:"100%", height:"100%", border:0, background:"#f7f8fa" }}
       onLoad={() => { if (iframe.current) linkElement(id, "peekElement", iframe.current); }}
       {...IFRAME_CONFIG}

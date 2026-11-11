@@ -5,7 +5,7 @@ const root=path.resolve(import.meta.dirname,'../desktop');
 const put=async(p,s)=>{await fs.mkdir(path.dirname(path.join(root,p)),{recursive:true});await fs.writeFile(path.join(root,p),s)};
 const replace=async(p,a,b)=>{const file=path.join(root,p);let s=await fs.readFile(file,'utf8');if(!s.includes(a)){if(s.includes(b))return;throw Error('Missing anchor '+p)}await fs.writeFile(file,s.replace(a,b))};
 await fs.mkdir(path.join(root,'public/case'),{recursive:true});
-for(const file of ['content.js','engine.js','style.css','interface.css'])await fs.copyFile(path.resolve(import.meta.dirname,'../dist',file),path.join(root,'public/case',file));
+for(const file of ['content.js','engine.js','style.css','interface.css','sim.css'])await fs.copyFile(path.resolve(import.meta.dirname,'../dist',file),path.join(root,'public/case',file));
 await fs.cp(path.resolve(import.meta.dirname,'../dist/assets'),path.join(root,'public/case/assets'),{recursive:true});
 let app=await fs.readFile(path.resolve(import.meta.dirname,'../dist/app.js'),'utf8');
 app=app.replace("const $=s=>document.querySelector(s);",`const $=s=>document.querySelector(s);
@@ -15,14 +15,12 @@ app=app.replace(/function render\(\)\{[^\n]+\}/,`function render(){if(state.endi
 app=app.replace("if(previous===6){ui.active=false;", "if(previous===6){ui.active=false;state.linkActive=false;");
 app=app.replace("if(a==='register'){flag(state,'registered');ui.active=true;", "if(a==='register'){flag(state,'registered');ui.active=true;state.linkActive=true;");
 app=app.replace("if(a==='toggle-link'){ui.active=!ui.active;", "if(a==='toggle-link'){ui.active=!ui.active;state.linkActive=ui.active;");
-app=app.replace('return `<div class="notebook">', 'return `<div class="toolbar"><span style="margin-right:auto;font-size:13px;color:#6f7a85">HC-19-041 · 调查记录</span><button data-action="audio">${state.audio?\'声音开启\':\'静音\'}</button><button data-action="menu">会话</button></div><div class="notebook">');
-app=app.replace("function readerView(){if(ui.reader==='room')",`function readerView(){if(ui.reader==='welcome')return '<article class="doc"><h1>开始之前</h1><p>陆遥发来了一块旧硬盘。她想请你找一张，能看清窗外的照片。</p><p>打开桌面的 HC_ARCHIVE 移动硬盘，进入「原始影像」，查看客厅西窗原图。</p><p>照片可以局部放大。资料中的名字和地点，可以在「芦苇搜索」中查询。</p><p>聊天记录会留下新的附件。调查便签用来整理判断，也可以写下自己的想法。</p><p>窗口可以拖动、缩放和最小化。任务栏能唤回窗口。按 Shift + Esc 打开开始菜单。</p><p class="meta">进度仅保存在当前浏览器。故事、网页和人物均为虚构。包含不安影像和空间异常，无突脸惊吓。</p></article>';if(ui.reader==='room')`);
 app=app.replace(/function renderDesktop\(\)\{[\s\S]*?\nfunction windowHTML/,`function renderDesktop(){
  const old=$('.window-content');const scroll=old?.scrollTop||0;
  const views={browser:browserView,chat:chatView,notes:notesView,reader:readerView,space:spaceView};
  $('#app').innerHTML='<main class="window-content pane-'+pane+'" data-win="'+pane+'">'+(views[pane]||notesView)()+'</main>';
  const current=$('.window-content');if(current)current.scrollTop=scroll;
- const chat=$('.chat-messages');if(chat)chat.scrollTop=chat.scrollHeight;
+ const chat=$('.wx-messages');if(chat)chat.scrollTop=chat.scrollHeight;
  bindWindowGestures();
 }
 function windowHTML`);
@@ -36,13 +34,13 @@ app=app.replace(/function openDoc\(id\)\{[^\n]+\}/,`function openDoc(id){
 }`);
 app=app.replace(/window.addEventListener\('resize',[^\n]+\);/,`window.addEventListener('resize',()=>render());`);
 app=app.replace(/\nrender\(\);\s*$/,`
-window.addEventListener('storage',e=>{if(e.key===STORAGE){state=hydrate(e.newValue);ui.active=Boolean(state.linkActive);render()}});
+window.addEventListener('storage',e=>{if(e.key===TYPE_KEY){ui.typing=Boolean(e.newValue)&&Date.now()-Number(JSON.parse(e.newValue||'0'))<10000;if(pane==='chat')render()}if(e.key===STORAGE){state=hydrate(e.newValue);ui.active=Boolean(state.linkActive);render()}});
 ui.active=Boolean(state.linkActive);
 if(!state.started){state.started=true;state.messages=introMessages.map(([time,text])=>({time,text,who:'lu'}));save()}
 if(pane==='reader'){openDoc(params.get('doc')||'room')}else render();
 `);
 await put('public/case/pane.js',app);
-await put('public/case/pane.html',`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>没有窗外</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="interface.css"><link rel="stylesheet" href="pane.css"></head><body><div id="app"></div><div id="toast" role="status"></div><dialog id="dialog"></dialog><script type="module" src="pane.js"></script></body></html>`);
+await put('public/case/pane.html',`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>没有窗外</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="interface.css"><link rel="stylesheet" href="pane.css"><link rel="stylesheet" href="sim.css"></head><body><div id="app"></div><div id="toast" role="status"></div><dialog id="dialog"></dialog><script type="module" src="pane.js"></script></body></html>`);
 await put('public/case/pane.css',`
 :root{color-scheme:light;--text:#252a30;--muted:#626a73;--line:#dce1e6;--accent:#0078d4;--serif:"Noto Serif SC","Songti SC",serif;--sans:"Segoe UI","Noto Sans SC","Microsoft YaHei",sans-serif}
 html,body,#app{width:100%;height:100%;min-width:0;margin:0;background:#f7f8fa;overflow:hidden;font-family:var(--sans);font-size:15px;color:var(--text)}
@@ -60,19 +58,19 @@ html,body,#app{width:100%;height:100%;min-width:0;margin:0;background:#f7f8fa;ov
 #toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:20;background:#263442;color:#fff;border:1px solid #41576c;border-radius:4px;font-size:14px;line-height:1.8;padding:12px 18px;width:max-content;max-width:90%}dialog{background:#fff;color:#303e4b;border:1px solid #bec8d3;border-radius:4px;padding:28px;max-width:520px;width:calc(100% - 40px);line-height:1.9}dialog::backdrop{background:#17222d70}dialog h3{font-size:21px;margin-bottom:14px}dialog p{font-size:15px;margin:12px 0}.dialog-actions{gap:10px;flex-wrap:wrap}.dialog-actions button{font-size:14px;padding:10px 16px}
 @media(max-width:500px){.doc{padding:24px}.notebook{padding:24px}.search-results{padding:24px}.toolbar{padding:10px}.chat-messages{padding:16px}}
 `);
-const shortcut=(app,url,icon,comment='')=>`[InternetShortcut]\nBaseURL=${app}\nURL=${url}\nIconFile=/System/Icons/${icon}.webp\nComment=${comment}\n`;
+const shortcut=(app,url,icon,comment='')=>`[InternetShortcut]\nBaseURL=${app}\nURL=${url}\nIconFile=/System/Icons/${icon}\nComment=${comment}\n`;
 const desktop='public/Users/Public/Desktop';
 for(const [name,app,url,icon] of [
- ['HC_ARCHIVE 移动硬盘','FileExplorer','/Users/Public/Documents/HC_ARCHIVE','mounted'],
- ['陆遥','CaseChat','','messenger'],['芦苇搜索','CaseSearch','','chromium'],['调查便签','CaseNotes','','tinymce'],['空间复核','CaseSpace','','executable']
+ ['HC_ARCHIVE 移动硬盘','FileExplorer','/Users/Public/Documents/HC_ARCHIVE','mounted.webp'],
+ ['陆遥','CaseChat','','wechat.png'],['芦苇搜索','CaseSearch','','chromium.webp'],['调查便签','CaseNotes','','tinymce.webp'],['空间复核','CaseSpace','','executable.webp']
 ])await put(`${desktop}/${name}.url`,shortcut(app,url,icon));
 const archive='public/Users/Public/Documents/HC_ARCHIVE';
 await put(`${archive}/现场回传/desktop.ini`,'[ShellClassInfo]\nIconFile=/System/Icons/documents.webp\n');
-await put(`${archive}/原始影像/041-W03_客厅西窗.jpg.url`,shortcut('CaseReader','room','photo','原始记录，含局部放大观察'));
+await put(`${archive}/原始影像/041-W03_客厅西窗.jpg.url`,shortcut('CaseReader','room','photo.webp','原始记录，含局部放大观察'));
 const received=[];
 for(const d of docs.filter(d=>d.kind!=='web')){
  const name=d.title.replace(/[<>:"/\\|?*]/g,'_')+'.url';
- const body=shortcut('CaseReader',d.id,d.kind==='video'?'vlc':'documents');
+ const body=shortcut('CaseReader',d.id,d.kind==='video'?'vlc.webp':'documents.webp');
  if(d.folder==='现场回传'){
   await fs.rm(path.join(root,`${archive}/${d.folder}/${name}`),{force:true});
   received.push({name,shortcut:body,stage:({entrance:6,green:8,rope:11,outside:7})[d.id]||6});
@@ -80,13 +78,14 @@ for(const d of docs.filter(d=>d.kind!=='web')){
 }
 await put('public/case/received-files.json',JSON.stringify(received,null,2));
 await put(`${archive}/开始之前.txt`,'陆遥发来了一块旧硬盘。\n\n先打开「原始影像」中的客厅西窗照片。\n有疑问时可以打开桌面的「调查便签」，按自己的节奏查证。\n照片里的名字、地点可以在「芦苇搜索」查询。\n\n窗口可以拖动、缩放、最小化，也可以在任务栏切换。\n原始文件不会随着调查被改写。\n');
-await put(`${desktop}/开始之前.url`,shortcut('CaseReader','welcome','documents'));
-for(const [name,app,icon] of [['陆遥','CaseChat','messenger'],['芦苇搜索','CaseSearch','chromium'],['调查便签','CaseNotes','tinymce'],['空间复核','CaseSpace','executable']])await put(`public/Users/Public/Start Menu/调查工具/${name}.url`,shortcut(app,'',icon));
+await put(`${desktop}/开始之前.url`,shortcut('CaseReader','welcome','documents.webp'));
+for(const [name,app,icon] of [['陆遥','CaseChat','wechat.png'],['芦苇搜索','CaseSearch','chromium.webp'],['调查便签','CaseNotes','tinymce.webp'],['空间复核','CaseSpace','executable.webp']])await put(`public/Users/Public/Start Menu/调查工具/${name}.url`,shortcut(app,'',icon));
 await put('public/session.json',JSON.stringify({aiEnabled:false,wallpaperImage:'GALAXY',themeName:'defaultTheme',windowStates:{}},null,2));
 const directory=(await fs.readFile(path.join(root,'contexts/process/directory.ts'),'utf8')).replace(/^  Case(?:Chat|Notes|Search|Reader|Space):[^\n]*\n/gm,'');
-const defs=[['CaseChat','陆遥','messenger',440,540],['CaseNotes','调查便签','tinymce',520,720],['CaseSearch','芦苇搜索','chromium',880,640],['CaseReader','影像查看器','photo',920,720],['CaseSpace','空间复核 · HC-19-041','executable',1000,700]].map(([id,title,icon,width,height])=>`  ${id}: { Component: dynamic(() => import("components/apps/CaseApp")), defaultSize: {width:${width},height:${height}},icon:"/System/Icons/${icon}.webp",title:"${title}",backgroundColor:"#f7f8fa",singleton:true },`).join('\n');
-await put('contexts/process/directory.ts',directory.replace('const directory: Processes = {','const directory: Processes = {\n'+defs));
-await replace('contexts/process/directory.ts','height: 325,\n      width: 447,','height: 470,\n      width: 680,');
+const defs=[['CaseChat','微信','wechat.png',520,640],['CaseNotes','调查便签','tinymce.webp',640,760],['CaseSearch','芦苇搜索','chromium.webp',880,640],['CaseReader','影像查看器','photo.webp',920,720],['CaseSpace','空间复核 · HC-19-041','executable.webp',1000,700]].map(([id,title,icon,width,height])=>`  ${id}: { Component: dynamic(() => import("components/apps/CaseApp")), defaultSize: {width:${width},height:${height}},icon:"/System/Icons/${icon}",title:"${title}",backgroundColor:"#f7f8fa",singleton:true },`).join('\n');
+let dirSrc=directory.replace('const directory: Processes = {','const directory: Processes = {\n'+defs);
+dirSrc=dirSrc.replace(/(FileExplorer: \{[\s\S]{0,220}?width: )\d+,/,'$1600,');
+await put('contexts/process/directory.ts',dirSrc);
 await replace('styles/defaultTheme/formats.ts',`"'Segoe UI', system-ui, Roboto, 'Helvetica Neue', sans-serif"`,`"'Segoe UI', 'Noto Sans SC', 'Microsoft YaHei', system-ui, sans-serif"`);
 let sizes=await fs.readFile(path.join(root,'styles/defaultTheme/sizes.ts'),'utf8');
 sizes=sizes.replaceAll('fontSize: "12px"','fontSize: "13px"').replace('maxIconTextDisplayWidth: 70','maxIconTextDisplayWidth: 90').replace('gridEntryWidth: "74px"','gridEntryWidth: "94px"').replace('gridEntryHeight: "70px"','gridEntryHeight: "80px"');

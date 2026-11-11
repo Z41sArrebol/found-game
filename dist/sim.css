@@ -1,0 +1,196 @@
+/* 拟真皮肤层，2026-11-12。
+   仅在 daedalOS 面板模式（.pane-* 由 pane.js 渲染）生效；legacy 单窗口模式不带 .pane-* 类，不受影响。
+   参考：微信 PC 客户端、OneNote 分区页、Edge 标签外壳、Windows 照片查看器、Agisoft Metashape 深色工作区。 */
+
+/* ---------- 公共：面板根容器 ---------- */
+.pane-chat .wx-root,.pane-notes .on-root,.pane-browser .edg-root,.pane-reader .ph-root,.pane-space .mt-root{height:100%;min-height:0}
+#app>.pane-chat{background:#f5f5f5}
+#app>.pane-notes{background:#fff}
+#app>.pane-browser{background:#fff}
+#app>.pane-reader{background:#1b1d21}
+#app>.pane-space{background:#2b2f33}
+
+/* ---------- 微信 ---------- */
+.wx-root{display:flex;flex-direction:column;height:100%;background:#f5f5f5;font-size:14px}
+.wx-head{min-height:54px;background:#fff;border-bottom:1px solid #e7e7e7;display:flex;align-items:center;padding:0 16px;gap:12px}
+.wx-peer{display:flex;align-items:baseline;gap:10px;min-width:0}
+.wx-peer b{font-size:15px;color:#1a1a1a}
+.wx-peer small{font-size:12px;color:#9a9a9a}
+.wx-peer small.reconnect{color:#c7833c}
+.wx-head-tools{margin-left:auto;display:flex;gap:14px;color:#7a7a7a}
+.wx-tool{display:inline-flex;padding:4px;border-radius:4px}
+.wx-tool:hover{background:#f0f0f0}
+.wx-tool svg{width:18px;height:18px}
+.wx-messages{flex:1;min-height:0;overflow:auto;padding:14px 18px 20px}
+.wx-time{text-align:center;font-size:12px;color:#b2b2b2;margin:14px 0 6px}
+.wx-row{display:flex;align-items:flex-start;gap:10px;margin:7px 0}
+.wx-row.self{flex-direction:row-reverse}
+.wx-avatar{flex:none;width:34px;height:34px;border-radius:4px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px}
+.wx-avatar.wx-lu{background:#758e7b}
+.wx-avatar.wx-me{background:#5b7da8}
+.wx-pop{max-width:72%}
+.wx-pop p{background:#fff;color:#1a1a1a;border-radius:4px;padding:9px 12px;font-size:14px;line-height:1.75;word-break:break-word}
+.wx-row.self .wx-pop p{background:#95ec69}
+.wx-pop.wx-typing{background:#fff;border-radius:4px;padding:11px 14px;display:flex;gap:5px;align-items:center}
+.wx-pop.wx-typing i{width:6px;height:6px;border-radius:50%;background:#c6c6c6;animation:wx-bounce 1.2s infinite}
+.wx-pop.wx-typing i:nth-child(2){animation-delay:.15s}
+.wx-pop.wx-typing i:nth-child(3){animation-delay:.3s}
+@keyframes wx-bounce{0%,60%,100%{transform:none;opacity:.55}30%{transform:translateY(-4px);opacity:1}}
+.wx-file{display:flex;align-items:center;gap:10px;background:#fff;border-radius:4px;padding:10px 12px;text-align:left;max-width:260px}
+.wx-file svg{width:26px;height:26px;color:#6e8cb8}
+.wx-file-main{display:flex;flex-direction:column;gap:2px;min-width:0}
+.wx-file-main b{font-size:13.5px;color:#1a1a1a;font-weight:400}
+.wx-file-main small{font-size:11.5px;color:#9a9a9a}
+.wx-sys{text-align:center;font-size:12px;color:#b2b2b2;margin:14px 0 4px}
+.wx-dock{background:#f7f7f7;border-top:1px solid #e7e7e7;padding:8px 14px 12px}
+.wx-chips{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.wx-chips button{background:#fff;border:1px solid #e0e0e0;border-radius:3px;padding:5px 10px;font-size:12px;color:#576b95}
+.wx-chips button:hover{background:#f2f6fa}
+.wx-inputbar{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #e7e7e7;border-radius:4px;padding:7px 8px 7px 12px}
+.wx-emoji{color:#9a9a9a;display:inline-flex}
+.wx-emoji svg{width:18px;height:18px}
+.wx-inputbar input{flex:1;min-width:0;border:0;outline:0;background:transparent;font-size:14px;color:#1a1a1a}
+.wx-inputbar input::placeholder{color:#b2b2b2}
+.wx-send{background:#07c160;color:#fff;border-radius:4px;padding:6px 16px;font-size:13px;border:0}
+.wx-send:active{background:#06ad56}
+
+/* ---------- OneNote ---------- */
+.pane-notes{background:#fff}
+.on-root{display:flex;flex-direction:column;height:100%;background:#fff}
+.on-bar{min-height:42px;background:#7719aa;color:#fff;display:flex;align-items:center;gap:12px;padding:0 14px}
+.on-app{font-size:14px;font-weight:600}
+.on-case{font-size:12px;opacity:.78}
+.on-space{margin-left:auto}
+.on-bar button{background:rgba(255,255,255,.14);border:0;color:#fff;border-radius:3px;padding:5px 12px;font-size:12px}
+.on-bar button:hover{background:rgba(255,255,255,.24)}
+.on-body{flex:1;display:flex;min-height:0}
+.on-nav{width:176px;flex:none;background:#faf9fb;border-right:1px solid #e4ddee;overflow:auto;padding:10px 8px;display:flex;flex-direction:column;gap:2px}
+.on-nav button{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:transparent;border:0;border-left:3px solid transparent;border-radius:4px;padding:8px 10px;font-size:13px;color:#454545;line-height:1.5}
+.on-nav button small{flex:none;font-size:11px;color:#977cc0;width:18px}
+.on-nav button span{flex:1;min-width:0}
+.on-nav button.current{background:#f1e8f7;border-left-color:#7719aa;color:#4a2a6b}
+.on-nav button.viewing{background:#ede4f5;border-left-color:#b28ed6}
+.on-nav button.done{color:#6a6a6a}
+.on-nav button:disabled{color:#b5b0bc}
+.on-nav button:not(:disabled):hover{background:#f1e8f7}
+.on-done{color:#107c10;font-style:normal;font-size:12px}
+.on-lock{color:#b5b0bc;display:inline-flex}
+.on-lock svg{width:12px;height:12px}
+.on-page{flex:1;min-width:0;overflow:auto;padding:24px 32px 44px}
+.on-eyebrow{font-size:12px;color:#977cc0;letter-spacing:.06em;margin-bottom:8px}
+.on-page h3{font-size:20px;line-height:1.6;color:#303030;margin:0 0 10px}
+.on-page .open-case button{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:#fff;border:1px solid #e2e2e2;border-radius:4px;padding:12px 14px;font-size:14px;line-height:1.8;color:#333;margin-bottom:9px}
+.on-page .open-case button em{flex:none;font-style:normal;color:#977cc0;font-size:13px;padding-top:2px}
+.on-page .open-case button:hover{border-color:#7719aa;background:#fbf7fd}
+.on-page .hint{background:#fff6d6;color:#6b5b1f;border:0;border-left:3px solid #d9b83e;border-radius:0 3px 3px 0}
+.on-page .case-actions .text-button{color:#7719aa}
+.on-record{margin:14px 0}
+.on-record p{display:flex;gap:12px;align-items:baseline;background:#fbfafc;border:1px solid #eee9f2;border-radius:4px;padding:10px 14px;font-size:14px;line-height:1.8;margin-bottom:7px;color:#454545}
+.on-record p em{flex:none;font-style:normal;color:#977cc0;font-size:12px}
+.on-record p.picked{background:#f1e8f7;border-color:#d9c2ec;color:#3d2450}
+.on-record p i{margin-left:auto;color:#107c10;font-style:normal}
+
+/* ---------- Edge ---------- */
+.pane-browser{background:#fff}
+.edg-root{display:flex;flex-direction:column;height:100%;background:#fff}
+.edg-tabs{background:#e9ebee;padding:6px 10px 0;display:flex;align-items:flex-end;gap:6px}
+.edg-tab{display:flex;align-items:center;gap:8px;background:#fff;border-radius:8px 8px 0 0;padding:7px 12px;font-size:12px;color:#333;width:210px}
+.edg-fav{width:14px;height:14px;color:#0f8a43;flex:none}
+.edg-tab .edg-x{margin-left:auto;color:#9aa0a6;font-style:normal;padding:0 2px}
+.edg-newtab{width:26px;height:26px;border-radius:50%;background:transparent;color:#5f6368;font-size:14px;line-height:1;margin-bottom:4px}
+.edg-nav{display:flex;align-items:center;gap:6px;padding:8px 12px;background:#fff;border-bottom:1px solid #e2e5e9}
+.edg-navbtn{width:30px;height:30px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#5f6368}
+.edg-navbtn:hover{background:#eef1f3}
+.edg-navbtn svg{width:16px;height:16px}
+.edg-address{flex:1;display:flex;align-items:center;gap:9px;background:#f1f3f4;border-radius:17px;padding:0 14px;min-height:34px}
+.edg-lock{color:#5f6368;display:inline-flex}
+.edg-lock svg{width:13px;height:13px}
+.edg-address input{flex:1;min-width:0;border:0;outline:0;background:transparent;font-size:13px;color:#202124}
+.edg-page{flex:1;min-height:0;overflow:auto;background:#fff}
+.pane-browser .browser-home{padding:84px 30px 60px;background:#fff;min-height:calc(100% - 96px)}
+.pane-browser .browser-logo{color:#416b84;font-size:40px;font-weight:500;letter-spacing:.04em}
+.pane-browser .search-results{padding:22px 0 50px;background:#fff;min-height:calc(100% - 96px);max-width:680px;margin:0 auto}
+.pane-browser .search-count{font-size:13px;color:#70757a}
+.pane-browser .search-result{margin-bottom:26px}
+.pane-browser .search-result>button{font-size:17px;color:#2b5c8a;line-height:1.6;text-align:left}
+.pane-browser .search-result>button:hover{text-decoration:underline}
+.pane-browser .result-url{font-size:12.5px;color:#5f6368;margin-bottom:2px}
+.pane-browser .search-result p{font-size:14px;line-height:1.8;color:#4d5156}
+.pane-browser .search-suggestions button{background:#f1f3f4;color:#3c6e91;border:0;border-radius:16px;font-size:13px;padding:8px 14px}
+
+/* ---------- Windows 照片 / 查看器 ---------- */
+.pane-reader{background:#1b1d21}
+.ph-root{display:flex;flex-direction:column;height:100%;background:#1b1d21}
+.ph-toolbar{min-height:48px;background:#202226;color:#dadce0;display:flex;align-items:center;gap:14px;padding:0 16px}
+.ph-name{font-size:13px;color:#c7cacd}
+.ph-tools{margin-left:auto;display:flex;align-items:center;gap:6px}
+.ph-tools button{width:30px;height:30px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;color:#c7cacf;background:transparent;border:0}
+.ph-tools button:hover{background:#2e3136}
+.ph-tools svg{width:16px;height:16px}
+.ph-zoom{font-size:12px;color:#9aa0a6;width:44px;text-align:center}
+.pane-reader .photo-stage{flex:1;min-height:0;background:#15171a}
+.pane-reader .observation{background:#26282d;color:#c9e2f5;font-size:14px;line-height:1.8;padding:12px 18px;border:0}
+.ph-caption{min-height:44px;background:#202226;color:#9aa0a6;font-size:12px;display:flex;align-items:center;gap:14px;padding:8px 16px;flex-wrap:wrap}
+.ph-cap-actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.ph-cap-actions button{background:transparent;border:1px solid #3a3d42;color:#c7cacf;border-radius:3px;padding:5px 10px;font-size:12px}
+.ph-cap-actions button:hover{background:#2e3136}
+.pane-reader .video-body{background:#1b1d21}
+.pane-reader .doc{background:#fff;min-height:calc(100vh - 46px);box-shadow:0 1px 10px #00000066}
+.pane-reader .rp-toolbar,.rp-toolbar{display:flex;align-items:center;gap:10px;min-height:46px;background:#fff;border-bottom:1px solid #e2e5e9;padding:0 14px}
+.rp-toolbar button{display:inline-flex;align-items:center;gap:6px;background:transparent;border:0;color:#444;font-size:13px;border-radius:4px;padding:6px 10px}
+.rp-toolbar button:hover{background:#f1f3f4}
+.rp-toolbar button svg{width:15px;height:15px}
+.rp-toolbar .address{flex:1;font-size:12px;color:#70757a;background:#f6f7f8;border-radius:4px;padding:7px 12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ---------- 空间复核（专业测量软件） ---------- */
+.pane-space{background:#2b2f33}
+.mt-root{display:flex;flex-direction:column;height:100%;background:#2b2f33;color:#c7cdd4;font-size:13px}
+.mt-menubar{min-height:34px;background:#22262a;display:flex;align-items:center;gap:4px;padding:0 14px}
+.mt-menubar b{font-size:13px;color:#e8ebee;font-weight:600;margin-right:10px}
+.mt-menubar span{font-size:12px;color:#aeb6be;padding:4px 8px;border-radius:3px}
+.mt-menubar span:hover{background:#31363c}
+.mt-pill{margin-left:auto;font-style:normal;font-size:11px;padding:3px 10px;border-radius:3px;background:#3a4148;color:#a8b4bc}
+.mt-pill.on{background:rgba(232,163,61,.16);color:#e8a33d}
+.mt-main{flex:1;display:flex;min-height:0}
+.mt-pane{width:190px;flex:none;background:#31363c;overflow:auto;padding:12px}
+.mt-left{border-right:1px solid #22262a}
+.mt-right{border-left:1px solid #22262a;width:224px;display:flex;flex-direction:column}
+.mt-pane h5{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#8b96a0;font-weight:600;margin:12px 0 6px}
+.mt-pane h5:first-child{margin-top:0}
+.mt-tree{font-size:12.5px;padding:5px 8px;border-radius:3px;color:#c0c7ce;line-height:1.7}
+.mt-tree.on{color:#e8a33d}
+.mt-root-item{font-weight:600;color:#dfe3e7}
+.mt-link{display:block;width:100%;text-align:left;background:transparent;border:0;color:#9fc1e8;font-size:12.5px;padding:5px 8px;border-radius:3px}
+.mt-link:hover{text-decoration:underline;background:#373d44}
+.mt-note{font-size:11.5px;color:#7e8994;margin-top:16px;line-height:1.8}
+.mt-viewport{flex:1;min-width:0;position:relative;background:#1b1f23;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;overflow:hidden;padding:22px}
+.mt-viewport img{max-width:min(92%,640px);max-height:52%;border-radius:2px;box-shadow:0 2px 18px #0008}
+.mt-grid{position:absolute;inset:0;background-image:linear-gradient(0deg,#ffffff0b 1px,transparent 1px),linear-gradient(90deg,#ffffff0b 1px,transparent 1px);background-size:34px 34px;pointer-events:none}
+.mt-viewport .anchor-map{position:relative;width:min(84%,520px);flex:none}
+.mt-status{position:absolute;left:14px;bottom:12px;font-size:11.5px;font-family:Consolas,"Courier New",monospace;color:#a8c7a0;line-height:1.8;text-align:left}
+.mt-open{position:absolute;right:14px;top:12px;font-size:11px;color:#e8a33d;border:1px dashed rgba(232,163,61,.5);border-radius:3px;padding:3px 9px;background:rgba(27,31,35,.65)}
+.mt-hintline{font-size:12px;color:#9aa4ad;line-height:1.8;margin-bottom:10px}
+.pane-space .anchor-options{display:flex;flex-direction:column;gap:6px}
+.pane-space .anchor-options button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:#3a4148;border:1px solid #22262a;border-radius:3px;padding:8px 10px;font-size:12.5px;color:#c7cdd4}
+.pane-space .anchor-options button i{flex:none;width:12px;height:12px;border:1px solid #6b7681;border-radius:2px;font-style:normal}
+.pane-space .anchor-options button.selected{border-color:#e8a33d}
+.pane-space .anchor-options button.selected i{background:#e8a33d;border-color:#e8a33d}
+.mt-actions{margin-top:auto;padding-top:14px;display:flex;flex-direction:column;gap:6px}
+.mt-actions button{background:#414950;border:1px solid #22262a;color:#d6dbe0;border-radius:3px;padding:8px 10px;font-size:12.5px}
+.mt-actions button:hover:not(:disabled){background:#4a525a}
+.mt-actions button:disabled{opacity:.45}
+.mt-actions .warning{color:#f2b8b5;border-color:#6e3a36}
+.mt-actions .warning:hover:not(:disabled){background:#57393a}
+.pane-space .spatial-log{background:#22262a;color:#9fb3ac;font-family:Consolas,"Courier New",monospace;font-size:11.5px;line-height:1.9;padding:10px 14px;height:88px;overflow:auto;border-top:1px solid #191d21}
+.mt-statusbar{min-height:26px;background:#22262a;display:flex;align-items:center;gap:18px;padding:0 14px;font-size:11px;color:#8b96a0}
+.mt-statusbar .mt-dim{margin-left:auto}
+
+/* ---------- 窄窗口 ---------- */
+@media(max-width:560px){
+ .on-nav{width:56px}
+ .on-nav button span,.on-nav button i{display:none}
+ .on-page{padding:18px}
+ .ph-cap-actions{margin-left:0}
+ .mt-pane{display:none}
+ .mt-right{display:flex}
+}
