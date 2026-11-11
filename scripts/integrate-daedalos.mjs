@@ -77,7 +77,7 @@ for(const d of docs.filter(d=>d.kind!=='web')){
  }else await put(`${archive}/${d.folder}/${name}`,body);
 }
 await put('public/case/received-files.json',JSON.stringify(received,null,2));
-await put(`${archive}/开始之前.txt`,'陆遥发来了一块旧硬盘。\n\n先打开「原始影像」中的客厅西窗照片。\n有疑问时可以打开桌面的「调查便签」，按自己的节奏查证。\n照片里的名字、地点可以在「芦苇搜索」查询。\n\n窗口可以拖动、缩放、最小化，也可以在任务栏切换。\n原始文件不会随着调查被改写。\n');
+await put(`${archive}/开始之前.txt`,'陆遥发来了一块旧硬盘。\n\n先打开「原始影像」里的客厅西窗照片，放大看看。\n资料里出现的名字、地点，丢进「芦苇搜索」就能查。\n有想法就记在「调查便签」里，按自己的节奏来。\n\n窗口能拖动缩放，也能最小化，任务栏能唤回来。\n原始文件不会随着调查被改写。\n');
 await put(`${desktop}/开始之前.url`,shortcut('CaseReader','welcome','documents.webp'));
 for(const [name,app,icon] of [['陆遥','CaseChat','wechat.png'],['芦苇搜索','CaseSearch','chromium.webp'],['调查便签','CaseNotes','tinymce.webp'],['空间复核','CaseSpace','executable.webp']])await put(`public/Users/Public/Start Menu/调查工具/${name}.url`,shortcut(app,'',icon));
 await put('public/session.json',JSON.stringify({aiEnabled:false,wallpaperImage:'GALAXY',themeName:'defaultTheme',windowStates:{}},null,2));
