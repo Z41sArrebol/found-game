@@ -22,7 +22,7 @@ import Button from "styles/common/Button";
 import { ROOT_NAME } from "utils/constants";
 import { haltEvent, label } from "utils/functions";
 
-const RECENT_LOCATIONS = "Recent locations";
+const RECENT_LOCATIONS = "最近的位置";
 
 type NavigationProps = {
   addressBarRef: React.RefObject<HTMLInputElement | null>;
@@ -92,8 +92,8 @@ const Navigation: FC<NavigationProps> = ({
         onClick={() => moveHistory(-1)}
         {...label(
           canGoBack
-            ? `Back to ${basename(history[position - 1]) || ROOT_NAME}`
-            : "Back"
+            ? `返回到 ${basename(history[position - 1]) || ROOT_NAME}`
+            : "后退"
         )}
       >
         <Back />
@@ -104,8 +104,8 @@ const Navigation: FC<NavigationProps> = ({
         onClick={() => moveHistory(1)}
         {...label(
           canGoForward
-            ? `Forward to ${basename(history[position + 1]) || ROOT_NAME}`
-            : "Forward"
+            ? `前进到 ${basename(history[position + 1]) || ROOT_NAME}`
+            : "前进"
         )}
       >
         <Forward />
@@ -145,8 +145,8 @@ const Navigation: FC<NavigationProps> = ({
         onClick={() => changeUrl(id, dirname(url))}
         {...label(
           url === "/"
-            ? "Up one level"
-            : `Up to "${upTo === "" ? ROOT_NAME : upTo}"`
+            ? "向上一级"
+            : `向上到 "${upTo === "" ? ROOT_NAME : upTo}"`
         )}
       >
         <Up />

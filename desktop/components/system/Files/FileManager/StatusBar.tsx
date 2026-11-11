@@ -91,16 +91,16 @@ const StatusBar: FC<StatusBarProps> = ({
       onContextMenuCapture={haltEvent}
       {...fileDrop}
     >
-      <div role="group" {...label("Total item count")}>
-        {count} item{count === 1 ? "" : "s"}
+      <div role="group" {...label("项目总数")}>
+        {count} 个项目
       </div>
       {showSelected && selected.length > 0 && (
         <div
           className="selected"
           role="group"
-          {...label("Selected item count and size")}
+          {...label("已选项目数与大小")}
         >
-          {selected.length} item{selected.length === 1 ? "" : "s"} selected
+          已选择 {selected.length} 个项目
           {selectedSize !== UNKNOWN_SIZE && selectedSize !== UNCALCULATED_SIZE
             ? `\u00A0\u00A0${getFormattedSize(selectedSize)}`
             : ""}
@@ -112,8 +112,8 @@ const StatusBar: FC<StatusBarProps> = ({
           className={view === "details" ? "active" : undefined}
           onClick={() => setView("details")}
           {...label(
-            "Displays information about each item\nin the window.  (Ctrl+Shift+6)",
-            "Details view"
+            "显示窗口中每个项目的详细信息。(Ctrl+Shift+6)",
+            "详细信息视图"
           )}
         >
           <Icon
@@ -127,8 +127,8 @@ const StatusBar: FC<StatusBarProps> = ({
           className={view === "icon" ? "active" : undefined}
           onClick={() => setView("icon")}
           {...label(
-            "Display items by using medium\nthumbnails.  (Ctrl+Shift+3)",
-            "Medium icons view"
+            "使用中型缩略图显示项目。(Ctrl+Shift+3)",
+            "中等图标视图"
           )}
         >
           <Icon

@@ -172,8 +172,8 @@ const useFileContextMenu = (
       const defaultProcess = getProcessByFileExtension(urlExtension);
 
       menuItems.push(
-        { action: () => moveEntries(absoluteEntries()), label: "Cut" },
-        { action: () => copyEntries(absoluteEntries()), label: "Copy" },
+        { action: () => moveEntries(absoluteEntries()), label: "剪切" },
+        { action: () => copyEntries(absoluteEntries()), label: "复制" },
         MENU_SEPERATOR
       );
 
@@ -188,7 +188,7 @@ const useFileContextMenu = (
 
               newShortcut(entry, shortcutProcess);
             }),
-          label: "Create shortcut",
+          label: "创建快捷方式",
         });
       }
 
@@ -201,9 +201,9 @@ const useFileContextMenu = (
 
             absoluteEntries().forEach((entry) => deleteLocalPath(entry));
           },
-          label: "Delete",
+          label: "删除",
         },
-        { action: () => setRenaming(baseName), label: "Rename" },
+        { action: () => setRenaming(baseName), label: "重命名" },
         MENU_SEPERATOR,
         {
           action: () => {
@@ -221,7 +221,7 @@ const useFileContextMenu = (
               });
             }
           },
-          label: "Properties",
+          label: "属性",
         }
       );
 
@@ -250,7 +250,7 @@ const useFileContextMenu = (
                 ? [
                     {
                       action: () => mapFileSystemDirectory("/"),
-                      label: "Map directory",
+                      label: "映射目录",
                     },
                   ]
                 : []),
@@ -258,7 +258,7 @@ const useFileContextMenu = (
                 ? [
                     {
                       action: () => mapFileSystemDirectory("/OPFS"),
-                      label: "Map OPFS",
+                      label: "映射 OPFS",
                     },
                   ]
                 : []),
@@ -281,7 +281,7 @@ const useFileContextMenu = (
               : IMAGE_ENCODE_FORMATS;
 
             menuItems.unshift(MENU_SEPERATOR, {
-              label: "Convert to",
+              label: "转换为",
               menu: ENCODE_FORMATS.filter(
                 (format) => format !== pathExtension
               ).map((format) => {
@@ -361,7 +361,7 @@ const useFileContextMenu = (
 
           if (canDecodeSpreadsheet) {
             menuItems.unshift(MENU_SEPERATOR, {
-              label: "Convert to",
+              label: "转换为",
               menu: SPREADSHEET_FORMATS.filter(
                 (format) => format !== pathExtension
               ).map((format) => {
@@ -436,7 +436,7 @@ const useFileContextMenu = (
                   );
                 });
               },
-              label: "Convert to M3U",
+                label: "转换为 M3U 播放列表",
             });
           }
 
@@ -453,7 +453,7 @@ const useFileContextMenu = (
             if (canShareFile(rootFs?.mountList, path, stats, shareData)) {
               menuItems.unshift({
                 action: () => navigator.share(shareData),
-                label: "Share",
+                label: "共享",
                 SvgIcon: Share,
               });
             }
@@ -462,21 +462,21 @@ const useFileContextMenu = (
           menuItems.unshift(
             {
               action: () => archiveFiles(absoluteEntries()),
-              label: "Add to archive...",
+              label: "添加到压缩文件...",
             },
             ...(EXTRACTABLE_EXTENSIONS.has(urlExtension) ||
             MOUNTABLE_EXTENSIONS.has(urlExtension)
               ? [
                   {
                     action: () => extractFiles(url),
-                    label: "Extract Here",
+                    label: "解压到当前文件夹",
                   },
                   MENU_SEPERATOR,
                 ]
               : []),
             {
               action: () => downloadFiles(absoluteEntries()),
-              label: "Download",
+              label: "下载",
             }
           );
 
@@ -500,7 +500,7 @@ const useFileContextMenu = (
       menuItems.push(MENU_SEPERATOR, {
         action: () =>
           unMapFs(path, rootFs?.mntMap[path].getName() !== "FileSystemAccess"),
-        label: "Disconnect",
+        label: "断开连接",
       });
     }
 
@@ -510,14 +510,14 @@ const useFileContextMenu = (
           open("Paint", { url });
           if (url) updateRecentFiles(url, "Paint");
         },
-        label: "Edit",
+        label: "编辑",
       });
     }
 
     if (CURSOR_FILE_EXTENSIONS.has(urlExtension)) {
       menuItems.unshift({
         action: () => setCursor(url),
-        label: "Set as mouse pointer",
+        label: "设为鼠标指针",
       });
     }
 
@@ -534,7 +534,7 @@ const useFileContextMenu = (
 
       menuItems.unshift(MENU_SEPERATOR, {
         action: () => aiCommand("Summarize"),
-        label: "Summarize Text (AI)",
+        label: "AI 总结文本",
       });
     }
 
@@ -547,7 +547,7 @@ const useFileContextMenu = (
         urlExtension !== ".svg")
     ) {
       menuItems.unshift({
-        label: "Set as background",
+        label: "设为背景",
         ...(hasBackgroundVideoExtension
           ? {
               action: () => setWallpaper(url),
@@ -556,23 +556,23 @@ const useFileContextMenu = (
               menu: [
                 {
                   action: () => setWallpaper(url, "fill"),
-                  label: "Fill",
+                  label: "填充",
                 },
                 {
                   action: () => setWallpaper(url, "fit"),
-                  label: "Fit",
+                  label: "适应",
                 },
                 {
                   action: () => setWallpaper(url, "stretch"),
-                  label: "Stretch",
+                  label: "拉伸",
                 },
                 {
                   action: () => setWallpaper(url, "tile"),
-                  label: "Tile",
+                  label: "平铺",
                 },
                 {
                   action: () => setWallpaper(url, "center"),
-                  label: "Center",
+                  label: "居中",
                 },
               ],
             }),
@@ -581,7 +581,7 @@ const useFileContextMenu = (
 
     if (openWithFiltered.length > 0) {
       menuItems.unshift({
-        label: "Open with",
+        label: "打开方式",
         menu: [
           ...openWithFiltered.map((id): MenuItem => {
             const { icon, title: label } = processDirectory[id] || {};
@@ -594,7 +594,7 @@ const useFileContextMenu = (
           MENU_SEPERATOR,
           {
             action: () => open("OpenWith", { url }),
-            label: "Choose another app",
+            label: "选择其他应用",
           },
         ],
         primary: !pid,
@@ -616,7 +616,7 @@ const useFileContextMenu = (
 
         menuItems.unshift({
           action: () => open("FileExplorer", { url: dirname(url) }, ""),
-          label: `Open ${isFolder ? "folder" : "file"} location`,
+          label: "打开所在位置",
         });
       }
 
@@ -629,7 +629,7 @@ const useFileContextMenu = (
           action: () => {
             openFile(pid, pidIcon);
           },
-          label: "Open in new window",
+          label: "在新窗口中打开",
         });
       }
 

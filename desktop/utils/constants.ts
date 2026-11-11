@@ -297,7 +297,7 @@ export const DYNAMIC_EXTENSION = new Set([
 
 export const SAVE_TITLE_CHAR = "\u25CF";
 
-export const ROOT_NAME = "My PC";
+export const ROOT_NAME = "我的电脑";
 
 export const SYSTEM_PATH = "/System";
 

@@ -55,13 +55,13 @@ const Sidebar: FC<SidebarProps> = ({ height }) => {
       heading: true,
       icon: <SideMenu />,
       name: "START",
-      ...(collapsed && { tooltip: "Expand" }),
+      ...(collapsed && { tooltip: "展开" }),
     },
     {
       active: true,
       icon: <AllApps />,
-      name: "All apps",
-      ...(collapsed && { tooltip: "All apps" }),
+      name: "所有应用",
+      ...(collapsed && { tooltip: "所有应用" }),
     },
   ];
   const { sizes } = useTheme();
@@ -79,8 +79,8 @@ const Sidebar: FC<SidebarProps> = ({ height }) => {
               "/System/Icons/documents.webp"
             ),
           icon: <Documents />,
-          name: "Documents",
-          ...(collapsed && { tooltip: "Documents" }),
+          name: "文档",
+          ...(collapsed && { tooltip: "文档" }),
         }
       : undefined,
     buttonAreaCount > 4
@@ -92,8 +92,8 @@ const Sidebar: FC<SidebarProps> = ({ height }) => {
               "/System/Icons/pictures.webp"
             ),
           icon: <Pictures />,
-          name: "Pictures",
-          ...(collapsed && { tooltip: "Pictures" }),
+          name: "图片",
+          ...(collapsed && { tooltip: "图片" }),
         }
       : undefined,
     buttonAreaCount > 5
@@ -105,8 +105,8 @@ const Sidebar: FC<SidebarProps> = ({ height }) => {
               "/System/Icons/videos.webp"
             ),
           icon: <Videos />,
-          name: "Videos",
-          ...(collapsed && { tooltip: "Videos" }),
+          name: "视频",
+          ...(collapsed && { tooltip: "视频" }),
         }
       : undefined,
     {
@@ -116,8 +116,8 @@ const Sidebar: FC<SidebarProps> = ({ height }) => {
         resetStorageAndReload(rootFs);
       },
       icon: <Power />,
-      name: "Power",
-      tooltip: "Clears session data and reloads the page.",
+      name: "电源",
+      tooltip: "清除会话数据并重新加载页面。",
     },
   ].filter(Boolean) as SidebarButtons;
 

@@ -27,12 +27,12 @@ const useTaskbarContextMenu = (onStartButton = false): ContextMenuCapture => {
       processArray.length > 0 &&
       !processArray.some(([, { minimized }]) => !minimized);
     const toggleLabel = allWindowsMinimized
-      ? "Show open windows"
-      : "Show the desktop";
+      ? "显示打开的窗口"
+      : "显示桌面";
     const menuItems: MenuItem[] = [
       {
         action: () => toggleShowDesktop(getProcesses(), stackOrder, minimize),
-        label: onStartButton ? "Desktop" : toggleLabel,
+        label: onStartButton ? "桌面" : toggleLabel,
       },
     ];
 
@@ -40,16 +40,16 @@ const useTaskbarContextMenu = (onStartButton = false): ContextMenuCapture => {
       menuItems.unshift(
         {
           action: () => open("Terminal"),
-          label: "Terminal",
+          label: "终端",
         },
         MENU_SEPERATOR,
         {
           action: () => open("FileExplorer"),
-          label: "File Explorer",
+          label: "文件资源管理器",
         },
         {
           action: () => open("Run"),
-          label: "Run",
+          label: "运行",
         },
         MENU_SEPERATOR
       );
@@ -59,8 +59,8 @@ const useTaskbarContextMenu = (onStartButton = false): ContextMenuCapture => {
           action: () => toggleFullscreen(),
           label:
             fullscreenElement === document.documentElement
-              ? "Exit full screen"
-              : "Enter full screen",
+              ? "退出全屏"
+              : "进入全屏",
         },
         MENU_SEPERATOR,
         ...(hasWebGPU || windowAI !== "unavailable"

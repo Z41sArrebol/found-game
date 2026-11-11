@@ -30,7 +30,6 @@ import { CLOSE_EFFECT_NAMES } from "utils/closeEffect";
 import {
   DESKTOP_PATH,
   FOLDER_ICON,
-  INDEX_FILE,
   MENU_SEPERATOR,
   MOUNTABLE_EXTENSIONS,
   PROCESS_DELIMITER,
@@ -47,7 +46,7 @@ import {
   updateIconPositions,
 } from "utils/functions";
 
-const NEW_FOLDER = "New folder";
+const NEW_FOLDER = "新建文件夹";
 const NEW_TEXT_DOCUMENT = "New Text Document.txt";
 const NEW_RTF_DOCUMENT = "New Rich Text Document.whtml";
 
@@ -164,7 +163,6 @@ const useFolderContextMenu = (
     setForegroundId,
     setIconPositions,
     setWallpaper: setSessionWallpaper,
-    updateRecentFiles,
   } = useSessionActions();
   const closeEffect = useCloseEffect();
   const iconPositions = useIconPositions();
@@ -257,7 +255,7 @@ const useFolderContextMenu = (
               top,
             });
           },
-          label: "Scroll Here",
+          label: "滚动到此处",
         },
         MENU_SEPERATOR,
         {
@@ -267,7 +265,7 @@ const useFolderContextMenu = (
               top: 0,
             });
           },
-          label: "Top",
+          label: "顶部",
         },
         {
           action: () => {
@@ -276,7 +274,7 @@ const useFolderContextMenu = (
               top: targetElement.scrollHeight,
             });
           },
-          label: "Bottom",
+          label: "底部",
         },
         MENU_SEPERATOR,
         {
@@ -286,7 +284,7 @@ const useFolderContextMenu = (
               top: -targetElement.clientHeight,
             });
           },
-          label: "Page Up",
+          label: "向上翻页",
         },
         {
           action: () => {
@@ -295,7 +293,7 @@ const useFolderContextMenu = (
               top: targetElement.clientHeight,
             });
           },
-          label: "Page Down",
+          label: "向下翻页",
         },
         MENU_SEPERATOR,
         {
@@ -305,7 +303,7 @@ const useFolderContextMenu = (
               top: -SCROLL_ITERATION_HEIGHT,
             });
           },
-          label: "Scroll Up",
+          label: "向上滚动",
         },
         {
           action: () => {
@@ -314,7 +312,7 @@ const useFolderContextMenu = (
               top: SCROLL_ITERATION_HEIGHT,
             });
           },
-          label: "Scroll Down",
+          label: "向下滚动",
         },
       ];
     }
@@ -322,7 +320,7 @@ const useFolderContextMenu = (
     const ADD_FILE = {
       action: () =>
         addToFolder().then((files) => updateDesktopIconPositions(files, event)),
-      label: "Add file(s)",
+      label: "上传文件",
     };
     const MAP_DIRECTORY = {
       action: () =>
@@ -335,7 +333,7 @@ const useFolderContextMenu = (
           .catch(() => {
             // Ignore failure to map
           }),
-      label: "Map directory",
+      label: "映射目录",
     };
     const FS_COMMANDS = [
       ADD_FILE,
@@ -354,26 +352,26 @@ const useFolderContextMenu = (
 
     return [
       {
-        label: "Sort by",
+        label: "排序方式",
         menu: [
           {
             action: () => updateSorting("name", true),
-            label: "Name",
+            label: "名称",
             toggle: !hasCustomOrder && sortBy === "name",
           },
           {
             action: () => updateSorting("size", false),
-            label: "Size",
+            label: "大小",
             toggle: !hasCustomOrder && sortBy === "size",
           },
           {
             action: () => updateSorting("type", true),
-            label: "Item type",
+            label: "项目类型",
             toggle: !hasCustomOrder && sortBy === "type",
           },
           {
             action: () => updateSorting("date", false),
-            label: "Date modified",
+            label: "修改日期",
             toggle: !hasCustomOrder && sortBy === "date",
           },
           ...(hasCustomOrder
@@ -382,30 +380,30 @@ const useFolderContextMenu = (
                 MENU_SEPERATOR,
                 {
                   action: () => updateSorting("", true),
-                  label: "Ascending",
+                  label: "升序",
                   toggle: isAscending,
                 },
                 {
                   action: () => updateSorting("", false),
-                  label: "Descending",
+                  label: "降序",
                   toggle: !isAscending,
                 },
               ]),
         ],
       },
-      { action: () => updateFolder(url), label: "Refresh" },
+      { action: () => updateFolder(url), label: "刷新" },
       ...(isDesktop
         ? [
             MENU_SEPERATOR,
             {
-              label: "Background",
+              label: "背景",
               menu: [
                 ...(isMusicVisualizationRunning
                   ? [
                       {
                         action: stopGlobalMusicVisualization,
                         checked: true,
-                        label: "Music Visualization",
+                        label: "音乐可视化",
                       },
                       MENU_SEPERATOR,
                     ]
@@ -435,7 +433,7 @@ const useFolderContextMenu = (
               ],
             },
             {
-              label: "Window close effect",
+              label: "窗口关闭特效",
               menu: CLOSE_EFFECT_NAMES.map((effectName) => ({
                 action: () => setCloseEffect(effectName),
                 label: effectName,
@@ -447,8 +445,8 @@ const useFolderContextMenu = (
                   {
                     action: () => captureScreen({ updateFolder, writeFile }),
                     label: currentMediaStream?.active
-                      ? "Stop screen capture"
-                      : "Capture screen",
+                      ? "停止屏幕捕获"
+                      : "捕获屏幕",
                   },
                 ]
               : []),
@@ -461,35 +459,35 @@ const useFolderContextMenu = (
             ...FS_COMMANDS,
             {
               action: () => open("Terminal", { url }),
-              label: "Open Terminal here",
+              label: "在此处打开终端",
             },
             MENU_SEPERATOR,
             {
               action: () => pasteToFolder(event),
               disabled: Object.keys(pasteList).length === 0,
-              label: "Paste",
+              label: "粘贴",
             },
             MENU_SEPERATOR,
             {
-              label: "New",
+              label: "新建",
               menu: [
                 {
                   action: () => newEntry(NEW_FOLDER, undefined, event),
                   icon: FOLDER_ICON,
-                  label: "Folder",
+                  label: "文件夹",
                 },
                 MENU_SEPERATOR,
                 {
                   action: () =>
                     newEntry(NEW_RTF_DOCUMENT, Buffer.from(""), event),
                   icon: getIconByFileExtension(".whtml"),
-                  label: "Rich Text Document",
+                  label: "富文本文档",
                 },
                 {
                   action: () =>
                     newEntry(NEW_TEXT_DOCUMENT, Buffer.from(""), event),
                   icon: getIconByFileExtension(".txt"),
-                  label: "Text Document",
+                  label: "文本文档",
                 },
               ],
             },
@@ -510,35 +508,10 @@ const useFolderContextMenu = (
                         open("Properties", { url });
                       }
                     },
-                    label: "Properties",
+                    label: "属性",
                   },
                 ]),
           ]),
-      ...(isDesktop
-        ? [
-            MENU_SEPERATOR,
-            {
-              action: async () => {
-                if (!(await exists(INDEX_FILE))) {
-                  const response = await fetch(document.location.href);
-                  const buffer = Buffer.from(await response.arrayBuffer());
-
-                  await writeFile(INDEX_FILE, buffer);
-
-                  updateFolder(dirname(INDEX_FILE), basename(INDEX_FILE));
-                }
-
-                open("MonacoEditor", { url: INDEX_FILE });
-                updateRecentFiles(INDEX_FILE, "MonacoEditor");
-              },
-              label: "View page source",
-            },
-            {
-              action: () => open("DevTools", { url: "dom" }),
-              label: "Inspect",
-            },
-          ]
-        : []),
     ];
   });
 };

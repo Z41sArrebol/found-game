@@ -18,19 +18,19 @@ export const DEFAULT_COLUMN_ORDER: ColumnName[] = [
 
 export const DEFAULT_COLUMNS: Columns = {
   date: {
-    name: "Date modified",
+    name: "修改日期",
     width: 133,
   },
   name: {
-    name: "Name",
+    name: "名称",
     width: 133,
   },
   size: {
-    name: "Size",
+    name: "大小",
     width: 70,
   },
   type: {
-    name: "Type",
+    name: "类型",
     width: 80,
   },
 };

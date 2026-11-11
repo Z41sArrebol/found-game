@@ -29,7 +29,7 @@ const SECONDS = /:\d{2}(?=\D*$)/;
 // Screen readers say a focused name again whenever it changes, so it only
 // changes each minute
 const clockLabel = (time: string): string =>
-  `System Clock, ${time.replace(SECONDS, "")}`;
+  `系统时间，${time.replace(SECONDS, "")}`;
 
 const LARGEST_CLOCK_TEXT = "44:44:44 AM";
 

@@ -3,7 +3,7 @@ export type LocaleTimeDate = {
   time: string;
 };
 
-const DEFAULT_LOCALE = "en";
+const DEFAULT_LOCALE = "zh-CN";
 
 const dateFormatter = new Intl.DateTimeFormat(DEFAULT_LOCALE, {
   day: "numeric",

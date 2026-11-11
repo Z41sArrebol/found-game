@@ -608,12 +608,12 @@ const Search: FC<SearchProps> = ({ toggleSearch }) => {
                 (bestMatchElement as HTMLElement)?.click();
               }
             }}
-            placeholder="Type here to search"
+            placeholder="在这里输入你要搜索的内容"
             style={{
               caretColor: showCaret ? undefined : "transparent",
             }}
             {...SEARCH_INPUT_PROPS}
-            aria-label="Type here to search"
+            aria-label="在这里输入你要搜索的内容"
           />
         </motion.div>
       </div>

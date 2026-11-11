@@ -52,26 +52,26 @@ const useTitlebarContextMenu = (id: string): ContextMenuCapture => {
         },
         disabled: !isMaxOrMin,
         icon: isMaxOrMin ? RESTORE : RESTORE_DISABLED,
-        label: "Restore",
+        label: "还原",
       },
       !hideMinimizeButton && {
         action: onMinimize,
         disabled: minimized,
         icon: minimized ? MINIMIZE_DISABLED : MINIMIZE,
-        label: "Minimize",
+        label: "最小化",
       },
       !hideMaximizeButton && {
         action: onMaximize,
         disabled: isMaxOrMin || !allowResizing,
         icon: isMaxOrMin ? MAXIMIZE_DISABLED : MAXIMIZE,
-        label: "Maximize",
+        label: "最大化",
       },
       showMaxOrMin && MENU_SEPERATOR,
       ...(canMute
         ? [
             {
               action: () => (muted ? unmute() : mute()),
-              label: muted ? "Unmute" : "Mute",
+              label: muted ? "取消静音" : "静音",
             },
             MENU_SEPERATOR,
           ]
@@ -79,7 +79,7 @@ const useTitlebarContextMenu = (id: string): ContextMenuCapture => {
       {
         action: onClose,
         icon: CLOSE,
-        label: "Close",
+        label: "关闭",
         primary: true,
       },
     ].filter(Boolean) as MenuItem[];

@@ -150,7 +150,7 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
             }
             className="minimize"
             onClick={triggerMinimize}
-            {...label("Minimize")}
+            {...label("最小化")}
           >
             <MinimizeIcon />
           </Button>
@@ -168,8 +168,8 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
             disabled={!allowResizing}
             onClick={onMaximize}
             {...(maximized
-              ? label("Restore Down", "Restore")
-              : label("Maximize"))}
+              ? label("向下还原", "还原")
+              : label("最大化"))}
           >
             {maximized ? <MaximizedIcon /> : <MaximizeIcon />}
           </Button>
@@ -179,7 +179,7 @@ const Titlebar: FC<TitlebarProps> = ({ id }) => {
           aria-keyshortcuts={isForeground ? "Control+Alt+F4" : undefined}
           className="close"
           onClick={onClose}
-          {...label("Close")}
+          {...label("关闭")}
         >
           <CloseIcon />
         </Button>
