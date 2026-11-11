@@ -17,7 +17,7 @@ const useCaseBoot = (): void => {
       initialRelativePosition: fileWindow.position ? undefined : { left: 115, top: 75 },
     });
     open("CaseChat", {
-      initialRelativePosition: chatWindow.position ? undefined : { right: 544, top: 95 },
+      initialRelativePosition: chatWindow.position ? undefined : { right: 764, top: 95 },
     });
   }, [ready, open, fileWindow.position, chatWindow.position]);
 };

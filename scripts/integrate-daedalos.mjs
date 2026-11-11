@@ -82,9 +82,9 @@ await put(`${desktop}/开始之前.url`,shortcut('CaseReader','welcome','documen
 for(const [name,app,icon] of [['陆遥','CaseChat','wechat.png'],['芦苇搜索','CaseSearch','chromium.webp'],['调查便签','CaseNotes','tinymce.webp'],['空间复核','CaseSpace','executable.webp']])await put(`public/Users/Public/Start Menu/调查工具/${name}.url`,shortcut(app,'',icon));
 await put('public/session.json',JSON.stringify({aiEnabled:false,wallpaperImage:'GALAXY',themeName:'defaultTheme',windowStates:{}},null,2));
 const directory=(await fs.readFile(path.join(root,'contexts/process/directory.ts'),'utf8')).replace(/^  Case(?:Chat|Notes|Search|Reader|Space):[^\n]*\n/gm,'');
-const defs=[['CaseChat','微信','wechat.png',520,640],['CaseNotes','调查便签','tinymce.webp',640,760],['CaseSearch','芦苇搜索','chromium.webp',880,640],['CaseReader','影像查看器','photo.webp',920,720],['CaseSpace','空间复核 · HC-19-041','executable.webp',1000,700]].map(([id,title,icon,width,height])=>`  ${id}: { Component: dynamic(() => import("components/apps/CaseApp")), defaultSize: {width:${width},height:${height}},icon:"/System/Icons/${icon}",title:"${title}",backgroundColor:"#f7f8fa",singleton:true },`).join('\n');
+const defs=[['CaseChat','微信','wechat.png',740,640],['CaseNotes','调查便签','tinymce.webp',640,760],['CaseSearch','芦苇搜索','chromium.webp',880,640],['CaseReader','影像查看器','photo.webp',920,720],['CaseSpace','空间复核 · HC-19-041','executable.webp',1000,700]].map(([id,title,icon,width,height])=>`  ${id}: { Component: dynamic(() => import("components/apps/CaseApp")), defaultSize: {width:${width},height:${height}},icon:"/System/Icons/${icon}",title:"${title}",backgroundColor:"#f7f8fa",singleton:true },`).join('\n');
 let dirSrc=directory.replace('const directory: Processes = {','const directory: Processes = {\n'+defs);
-dirSrc=dirSrc.replace(/(FileExplorer: \{[\s\S]{0,220}?width: )\d+,/,'$1600,');
+dirSrc=dirSrc.replace(/(FileExplorer: \{[\s\S]{0,220}?width: )\d+,/,'$1390,');
 await put('contexts/process/directory.ts',dirSrc);
 await replace('styles/defaultTheme/formats.ts',`"'Segoe UI', system-ui, Roboto, 'Helvetica Neue', sans-serif"`,`"'Segoe UI', 'Noto Sans SC', 'Microsoft YaHei', system-ui, sans-serif"`);
 let sizes=await fs.readFile(path.join(root,'styles/defaultTheme/sizes.ts'),'utf8');

@@ -10,49 +10,94 @@
 #app>.pane-reader{background:#1b1d21}
 #app>.pane-space{background:#2b2f33}
 
-/* ---------- 微信 ---------- */
-.wx-root{display:flex;flex-direction:column;height:100%;background:#f5f5f5;font-size:14px}
-.wx-head{min-height:54px;background:#fff;border-bottom:1px solid #e7e7e7;display:flex;align-items:center;padding:0 16px;gap:12px}
+/* ---------- 微信 4.0 PC（浅色） ---------- */
+.wx-root{display:flex;flex-direction:column;height:100%;min-height:0;background:#f5f5f5;color:#1a1a1a;font-size:14px}
+@media(min-width:700px){.wx-root.wide{display:grid;grid-template-columns:64px 224px 1fr}}
+.wx-rail{display:flex;flex-direction:column;align-items:center;gap:6px;background:#e9e9e9;padding:14px 0 12px}
+.wx-rail .wx-me-rail{width:38px;height:38px;margin-bottom:10px;border-radius:6px}
+.wx-nav{position:relative;width:38px;height:38px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#5f5f5f}
+.wx-nav svg{width:22px;height:22px}
+.wx-nav.on{color:#07c160}
+.wx-nav.dim{color:#a6a6a6}
+.wx-rail-pad{flex:1}
+.wx-red-dot{position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:#fa5151}
+.wx-red-dot.none{display:none}
+.wx-badge{position:absolute;top:-3px;right:-4px;min-width:15px;height:15px;border-radius:8px;background:#fa5151;color:#fff;font-size:10px;font-style:normal;display:flex;align-items:center;justify-content:center;padding:0 3px}
+.wx-list{background:#f7f7f7;border-right:1px solid #e2e2e2;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.wx-search{display:flex;gap:8px;padding:12px 12px 8px;align-items:center}
+.wx-searchbox{flex:1;display:flex;align-items:center;gap:6px;background:#ececec;border-radius:6px;padding:6px 10px;color:#9a9a9a}
+.wx-searchbox svg{width:14px;height:14px}
+.wx-searchbox i{font-style:normal;font-size:13px}
+.wx-plus{color:#7a7a7a;display:inline-flex}
+.wx-plus svg{width:20px;height:20px}
+.wx-pin{display:flex;align-items:center;gap:8px;padding:9px 14px;color:#8a8a8a;font-size:13px;background:#f0f0f0;border-top:1px solid #e5e5e5;border-bottom:1px solid #e5e5e5}
+.wx-pin svg{width:14px;height:14px}
+.wx-pin-caret{margin-left:auto;display:inline-flex;color:#a6a6a6}
+.wx-pin-caret svg{width:14px;height:14px}
+.wx-list .wx-item{display:flex;gap:10px;width:100%;text-align:left;padding:10px 12px;background:transparent;border:0;color:inherit;align-items:center}
+.wx-list .wx-item:hover{background:#f0f0f0}
+.wx-list .wx-item.on{background:#e5e5e5}
+.wx-item.dead{cursor:default}
+.wx-item .wx-avatar{width:40px;height:40px;border-radius:6px}
+.wx-item-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.wx-item-row{display:flex;align-items:center;gap:8px}
+.wx-item-row b{flex:1;min-width:0;font-size:14px;font-weight:500;color:#1a1a1a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wx-item-row time{font-size:11.5px;color:#a5a5a5;flex:none}
+.wx-item-row small{flex:1;min-width:0;font-size:12.5px;color:#9a9a9a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wx-unread{flex:none;min-width:16px;height:16px;border-radius:8px;background:#fa5151;color:#fff;font-size:10.5px;font-style:normal;display:flex;align-items:center;justify-content:center;padding:0 4px}
+.wx-mute{color:#b0b0b0;display:inline-flex}
+.wx-mute svg{width:14px;height:14px}
+.wx-chat{flex:1;min-width:0;display:flex;flex-direction:column;min-height:0;background:#f5f5f5}
+.wx-head{min-height:54px;background:#f5f5f5;border-bottom:1px solid #e5e5e5;display:flex;align-items:center;padding:0 16px;gap:12px}
 .wx-peer{display:flex;align-items:baseline;gap:10px;min-width:0}
 .wx-peer b{font-size:15px;color:#1a1a1a}
 .wx-peer small{font-size:12px;color:#9a9a9a}
 .wx-peer small.reconnect{color:#c7833c}
-.wx-head-tools{margin-left:auto;display:flex;gap:14px;color:#7a7a7a}
-.wx-tool{display:inline-flex;padding:4px;border-radius:4px}
-.wx-tool:hover{background:#f0f0f0}
+.wx-head-tools{margin-left:auto;display:flex;gap:14px;color:#9a9a9a;align-items:center}
+.wx-tool{display:inline-flex;padding:4px;border-radius:4px;color:#7a7a7a}
+.wx-tool:hover{color:#4a4a4a}
 .wx-tool svg{width:18px;height:18px}
+.wx-tool.wx-caret svg{width:12px;height:12px}
 .wx-messages{flex:1;min-height:0;overflow:auto;padding:14px 18px 20px}
-.wx-time{text-align:center;font-size:12px;color:#b2b2b2;margin:14px 0 6px}
+.wx-time{text-align:center;font-size:12px;color:#a8a8a8;margin:14px 0 6px}
 .wx-row{display:flex;align-items:flex-start;gap:10px;margin:7px 0}
 .wx-row.self{flex-direction:row-reverse}
-.wx-avatar{flex:none;width:34px;height:34px;border-radius:4px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px}
+.wx-avatar{flex:none;width:34px;height:34px;border-radius:5px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px}
 .wx-avatar.wx-lu{background:#758e7b}
 .wx-avatar.wx-me{background:#5b7da8}
 .wx-pop{max-width:72%}
-.wx-pop p{background:#fff;color:#1a1a1a;border-radius:4px;padding:9px 12px;font-size:14px;line-height:1.75;word-break:break-word}
-.wx-row.self .wx-pop p{background:#95ec69}
-.wx-pop.wx-typing{background:#fff;border-radius:4px;padding:11px 14px;display:flex;gap:5px;align-items:center}
+.wx-pop p{background:#fff;color:#1a1a1a;border-radius:5px;padding:9px 12px;font-size:14px;line-height:1.75;word-break:break-word}
+.wx-row.self .wx-pop p{background:#95ec69;color:#1a1a1a}
+.wx-pop.wx-typing{background:#fff;border-radius:5px;padding:11px 14px;display:flex;gap:5px;align-items:center}
 .wx-pop.wx-typing i{width:6px;height:6px;border-radius:50%;background:#c6c6c6;animation:wx-bounce 1.2s infinite}
 .wx-pop.wx-typing i:nth-child(2){animation-delay:.15s}
 .wx-pop.wx-typing i:nth-child(3){animation-delay:.3s}
 @keyframes wx-bounce{0%,60%,100%{transform:none;opacity:.55}30%{transform:translateY(-4px);opacity:1}}
-.wx-file{display:flex;align-items:center;gap:10px;background:#fff;border-radius:4px;padding:10px 12px;text-align:left;max-width:260px}
+.wx-file{display:flex;align-items:center;gap:10px;background:#fff;border-radius:5px;padding:10px 12px;text-align:left;max-width:260px}
 .wx-file svg{width:26px;height:26px;color:#6e8cb8}
 .wx-file-main{display:flex;flex-direction:column;gap:2px;min-width:0}
 .wx-file-main b{font-size:13.5px;color:#1a1a1a;font-weight:400}
 .wx-file-main small{font-size:11.5px;color:#9a9a9a}
 .wx-sys{text-align:center;font-size:12px;color:#b2b2b2;margin:14px 0 4px}
-.wx-dock{background:#f7f7f7;border-top:1px solid #e7e7e7;padding:8px 14px 12px}
-.wx-chips{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
-.wx-chips button{background:#fff;border:1px solid #e0e0e0;border-radius:3px;padding:5px 10px;font-size:12px;color:#576b95}
-.wx-chips button:hover{background:#f2f6fa}
-.wx-inputbar{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #e7e7e7;border-radius:4px;padding:7px 8px 7px 12px}
-.wx-emoji{color:#9a9a9a;display:inline-flex}
-.wx-emoji svg{width:18px;height:18px}
-.wx-inputbar input{flex:1;min-width:0;border:0;outline:0;background:transparent;font-size:14px;color:#1a1a1a}
-.wx-inputbar input::placeholder{color:#b2b2b2}
-.wx-send{background:#07c160;color:#fff;border-radius:4px;padding:6px 16px;font-size:13px;border:0}
-.wx-send:active{background:#06ad56}
+.wx-dock{background:#f5f5f5;border-top:1px solid #e5e5e5;padding:8px 14px 10px;display:flex;flex-direction:column;gap:8px}
+.wx-chips{display:flex;gap:8px;flex-wrap:wrap}
+.wx-chips button{background:#fff;border:1px solid #e0e0e0;border-radius:3px;padding:4px 10px;font-size:12px;color:#576b95}
+.wx-chips button:hover:not(:disabled){background:#f2f6fa}
+.wx-chips button:disabled{opacity:.45}
+.wx-inputbox{border:1px solid #dcdcdc;border-radius:6px;background:#fff;padding:9px 12px;min-height:64px;display:flex}
+.wx-inputbox:focus-within{border-color:#c6c6c6}
+.wx-inputbox input{flex:1;min-width:0;border:0;outline:0;background:transparent;font-size:14px;color:#1a1a1a;align-self:flex-start}
+.wx-toolbar{display:flex;align-items:center;gap:14px;color:#7a7a7a}
+.wx-ticon{display:inline-flex;color:#7a7a7a}
+.wx-ticon svg{width:19px;height:19px}
+.wx-ticon.wx-caret svg{width:12px;height:12px}
+.wx-toolbar-pad{flex:1}
+.wx-ticon.dim{color:#9a9a9a}
+.wx-ticon.dim svg{width:20px;height:20px;border:1px solid #c6c6c6;border-radius:50%;padding:3px}
+.wx-send{background:#e0e0e0;color:#9a9a9a;border-radius:5px;padding:6px 18px;font-size:13px;border:0}
+.wx-send:hover{background:#d4d4d4}
+.wx-send.has-text{background:#07c160;color:#fff}
+.wx-send.has-text:hover{background:#0abf5e}
 
 /* ---------- OneNote ---------- */
 .pane-notes{background:#fff}

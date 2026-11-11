@@ -3,7 +3,7 @@ import { type Processes } from "contexts/process/types";
 import { FOLDER_ICON, TASKBAR_HEIGHT } from "utils/constants";
 
 const directory: Processes = {
-  CaseChat: { Component: dynamic(() => import("components/apps/CaseApp")), defaultSize: {width:520,height:640},icon:"/System/Icons/wechat.png",title:"微信",backgroundColor:"#f7f8fa",singleton:true },
+  CaseChat: { Component: dynamic(() => import("components/apps/CaseApp")), defaultSize: {width:740,height:640},icon:"/System/Icons/wechat.png",title:"微信",backgroundColor:"#f7f8fa",singleton:true },
   CaseNotes: { Component: dynamic(() => import("components/apps/CaseApp")), defaultSize: {width:640,height:760},icon:"/System/Icons/tinymce.webp",title:"调查便签",backgroundColor:"#f7f8fa",singleton:true },
   CaseSearch: { Component: dynamic(() => import("components/apps/CaseApp")), defaultSize: {width:880,height:640},icon:"/System/Icons/chromium.webp",title:"芦苇搜索",backgroundColor:"#f7f8fa",singleton:true },
   CaseReader: { Component: dynamic(() => import("components/apps/CaseApp")), defaultSize: {width:920,height:720},icon:"/System/Icons/photo.webp",title:"影像查看器",backgroundColor:"#f7f8fa",singleton:true },
@@ -104,7 +104,7 @@ const directory: Processes = {
     Component: dynamic(() => import("components/apps/FileExplorer")),
     defaultSize: {
       height: 470,
-      width: 600,
+      width: 390,
     },
     icon: FOLDER_ICON,
     title: "File Explorer",
