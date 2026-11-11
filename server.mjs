@@ -16,4 +16,4 @@ const server=http.createServer((req,res)=>{
   fs.readFile(filename,(err,data)=>{if(err){res.writeHead(404).end('Not found');return}res.writeHead(200,{'Content-Type':mime[path.extname(filename)]||'application/octet-stream','Cache-Control':'no-cache'}).end(data)});
 });
 const port=Number(process.env.PORT||4178);
-server.listen(port,'127.0.0.1',()=>console.log(`Local: http://127.0.0.1:${port}`));
+server.listen(port,'127.0.0.1',()=>console.log(`Local: http://127.0.0.1:${port}\nEntry: http://127.0.0.1:${port}/forum.html`));
