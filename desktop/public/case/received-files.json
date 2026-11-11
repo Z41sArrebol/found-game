@@ -1,0 +1,22 @@
+[
+  {
+    "name": "陆遥 · 进入前的现场记录.url",
+    "shortcut": "[InternetShortcut]\nBaseURL=CaseReader\nURL=entrance\nIconFile=/System/Icons/documents.webp\nComment=\n",
+    "stage": 6
+  },
+  {
+    "name": "陆遥 · 门后的绿色走廊.url",
+    "shortcut": "[InternetShortcut]\nBaseURL=CaseReader\nURL=green\nIconFile=/System/Icons/documents.webp\nComment=\n",
+    "stage": 8
+  },
+  {
+    "name": "器材卡 · 橙色放线绳.url",
+    "shortcut": "[InternetShortcut]\nBaseURL=CaseReader\nURL=rope\nIconFile=/System/Icons/documents.webp\nComment=\n",
+    "stage": 11
+  },
+  {
+    "name": "物业 · 门外接应记录.url",
+    "shortcut": "[InternetShortcut]\nBaseURL=CaseReader\nURL=outside\nIconFile=/System/Icons/documents.webp\nComment=\n",
+    "stage": 7
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "key": "room",
+    "prompt": "Use case: photorealistic-natural. Create ONE landscape 16:10 documentary real-estate survey photograph, realistic unglamorous modest Chinese rental apartment in 2019, muted faded green walls, pale tile floor, a small worn brown desk under a large rectangular window centered at x=55%, y=38%, dusty daylight, blue towel on the left side of the sill, red takeout paper bag on desk right, warm simple desk lamp on left, old wooden chair. Through the window is a dark nearby apartment window with a remarkably similar desk, blue towel, red bag and lamp but seen from another angle, subtle impossible spatial echo. This must look like a mundane handheld survey evidence photo, no person, no monsters, no gore, no horror poster, no text, no UI, no decorative typography. Sharp enough for zooming. Window occupies around 40% width, top 20% to bottom 65%. Restrained unease, normal daylight, no cinematic teal-orange look.",
+    "mode": "built-in generate"
+  },
+  {
+    "key": "corridor",
+    "prompt": "Use case: photorealistic-natural. ONE landscape 16:10 mundane 2008 Chinese budget hotel corridor survey photograph, faded pistachio green metal fire exit door at far end, mottled off-white plaster with dull green lower half, old cream tile floor, exposed conduit with three fastener holes, cheap fluorescent lights, crooked small inspection paper attached to door frame with an almost illegible 2008 date. Old analog digital camera, natural drab tones, empty, subtly claustrophobic. Show the whole corridor straight-on and green door clearly. No people, no creatures, no gore, no title, no UI. The door should be recognizable through woodgrain-sized peeling pale paint at bottom right. Real evidence photograph, no cinematic effects.",
+    "mode": "built-in generate"
+  },
+  {
+    "key": "exterior",
+    "prompt": "Use case: photorealistic-natural. ONE landscape 16:10 municipal maintenance documentary photograph of an ordinary aging Chinese six-storey residential building west-facing end facade, photographed from ground during overcast daylight. The broad west end wall is uninterrupted pale grey dirty masonry with exposed small conduit and patchwork repairs, NO window openings on its top floor west wall. At the right corner a little of the south facade with stacked enclosed balconies is visible. No horror, no people, no monsters, no decorative text or UI. Real mundane survey photo with neutral colors, clear geometry, sufficiently high resolution for zoom. Concrete sky overhead, trees partial foreground bottom.",
+    "mode": "built-in generate"
+  },
+  {
+    "key": "ceiling",
+    "prompt": "Use case: photorealistic-natural. ONE landscape 16:10 unsettling documentary still frame in a modest Chinese rental room with faded green walls, desk and old large window, same everyday shabby 2019 aesthetic. Impossible camera position high at ceiling just INSIDE the room, looking steeply down at the back of one adult female survey photographer in a grey sweater, dark ponytail, holding a long black camera pole OUT through the open window. We can see back of head and top of shoulders, no face. She believes camera pole is outside but frame inexplicably sees her from the inside ceiling. A desk with blue towel, simple lamp, red paper bag. Natural grey daylight with warm little lamp. No creature, no gore, no scary facial expression, no UI, no typography, no arrows, no film borders. Subtle spatial dread, readable position of extended pole.",
+    "mode": "built-in generate"
+  },
+  {
+    "key": "corridor-paused",
+    "prompt": "Edit target: the attached corridor photograph. Precisely remove only the small paper inspection notice hanging on the wall immediately left of the green door. Replace with matching uninterrupted dirty off-white plaster. Preserve the entire camera framing, all door paint chips, handles, wall textures, lighting, resolution, everything else exactly. No new objects, no text, no artistic restyling.",
+    "mode": "built-in edit"
+  },
+  {
+    "key": "clinic",
+    "prompt": "Edit target: the attached green-walled rental room. Make a photographic archival 1994 clinic duty room variant from EXACTLY THE SAME CAMERA POSITION and EXACTLY THE SAME ROOM GEOMETRY and window frame. Preserve wall corner, window sill notch and outlet locations. Replace desk contents with a folded white cloth, old metal clinical tray and analogue desk phone; no red paper bags, no blue towels; replace wooden chair with simple old steel chair. Through window is a gloomy wall. Desaturated 1994 photographic scan with slight faded print grain but legible geometry. Remove wardrobe replace with worn medical storage cabinet. No people, no monsters, no text, no UI. Important: realistic documentary evidence, no horror poster.",
+    "mode": "built-in edit"
+  },
+  {
+    "key": "entrance",
+    "prompt": "Use case: photorealistic-natural. ONE landscape 16:10 mundane contemporary Chinese old apartment entrance evidence photograph. View from a plain shared residential landing into an open brown wooden apartment door. Distinct from a green hotel emergency exit. In foreground left a cream cast iron radiator pipe is the outside anchor with a bright orange thin survey cord tied securely around it. A small blue tape band marks the cord at its start near the radiator. The orange cord continues unbroken across grey tile floor, through the open brown entrance doorway, into modest empty rental interior. At bottom of the wooden door a clearly visible BLUE RUBBER DOOR WEDGE keeps door open. Beside frame a small white maintenance sticker with tiny 2026 date, no other text. Daylight, normal no horror, documentary factual camera, no people, no creatures, no cinematic lighting, no UI. All three key details radiator anchor, orange cord, blue door wedge must be visibly identifiable. Sharp photograph.",
+    "mode": "built-in generate"
+  }
+]

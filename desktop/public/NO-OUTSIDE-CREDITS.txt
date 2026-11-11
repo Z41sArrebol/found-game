@@ -1,0 +1,5 @@
+没有窗外
+Desktop environment: daedalOS by Dustin Brett, MIT License.
+https://github.com/DustinBrett/daedalOS
+
+Original game story, investigation logic and generated illustrations are in the parent no-outside project. See ASSETS.md.

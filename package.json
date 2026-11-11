@@ -1,0 +1,17 @@
+{
+  "name": "no-outside",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "start": "node server.mjs",
+    "sync:game": "node scripts/integrate-daedalos.mjs",
+    "build:desktop": "npm run sync:game && npm --prefix desktop run build",
+    "predev:desktop": "npm run sync:game && npm --prefix desktop run build:prebuild",
+    "dev:desktop": "npm --prefix desktop run dev -- --hostname 127.0.0.1 --port 4179"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1"
+  }
+}

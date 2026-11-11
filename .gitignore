@@ -1,0 +1,11 @@
+node_modules/
+.shots/
+*.log
+.runtime/
+release/
+.env
+.env.*
+!.env.example
+*.tsbuildinfo
+/scripts/finalize-assets.mjs
+/scripts/polish-interface.mjs

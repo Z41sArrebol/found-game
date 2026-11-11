@@ -1,0 +1,37 @@
+[
+  {
+    "name": "ceiling.png",
+    "sha256": "2ac974ff165a2c26998999393f19fcba9739f7d5905a7aa04c4c3b6d0cb19602",
+    "bytes": 2475856
+  },
+  {
+    "name": "clinic.png",
+    "sha256": "e8b677bd3c197754d3bb51d3a4e3605cb19089e684bd11856419e24f00aed55f",
+    "bytes": 2684396
+  },
+  {
+    "name": "corridor-paused.png",
+    "sha256": "750c0b665e909b33b50d7cf3b084c201bd195eafc159a678a1a97e755f2239c0",
+    "bytes": 1856761
+  },
+  {
+    "name": "corridor.png",
+    "sha256": "a3b483a0ae8c54e5e1c0c7b2397f6b2b2190917882991d4c7a895faa0c2ac224",
+    "bytes": 2186820
+  },
+  {
+    "name": "entrance.png",
+    "sha256": "54c4f826c0eb0ada1512eedd2ec7ef52cc147c622ddb4c4f2f710553c7d30a53",
+    "bytes": 2633625
+  },
+  {
+    "name": "exterior.png",
+    "sha256": "0c2cf2aa16ab2be2be4026880de5db61386e0b3c7caf5dd2b5264891620a2e34",
+    "bytes": 2617729
+  },
+  {
+    "name": "room.png",
+    "sha256": "2902756d960073af3cc9e0be64bd899b545d621eb16bdb9d826f1d603b6b60db",
+    "bytes": 2183853
+  }
+]
