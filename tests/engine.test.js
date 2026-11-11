@@ -1,13 +1,13 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {fresh,hydrate,flag,visit,missing,resolve,search,rescue} from '../dist/engine.js';
+import {fresh,hydrate,flag,visit,missing,resolve,resolveInput,search,rescue} from '../dist/engine.js';
 import {docs,puzzles} from '../dist/content.js';
 
 test('wrong conclusions and missing evidence cannot advance the investigation',()=>{
  const s=fresh();assert.equal(resolve(s,1).reason,'evidence');flag(s,'inspect-window');assert.equal(resolve(s,0).reason,'wrong');assert.equal(s.stage,0);assert.equal(resolve(s,1).ok,true);assert.equal(s.stage,1);
 });
 test('all main investigation nodes are reachable with their actual evidence requirements',()=>{
- const s=fresh();for(let i=0;i<11;i++){assert.equal(s.stage,i);for(const item of puzzles[i].requires){if(docs.some(d=>d.id===item))visit(s,item);else flag(s,item)}assert.equal(missing(s).length,0);const r=resolve(s,puzzles[i].answer);assert.equal(r.ok,true,'node '+i)}assert.equal(s.stage,11);for(const item of puzzles[11].requires)visit(s,item);assert.equal(rescue(s,0).ok,true);assert.equal(rescue(s,0).ok,false);assert.equal(s.rescue,1);assert.equal(rescue(s,1).ok,true);assert.equal(rescue(s,2).done,true);assert.equal(s.ending,'safe');assert.equal(resolve(s,1).reason,'ending');
+ const s=fresh();for(let i=0;i<11;i++){assert.equal(s.stage,i);for(const item of puzzles[i].requires){if(docs.some(d=>d.id===item))visit(s,item);else flag(s,item)}assert.equal(missing(s).length,0);const r=puzzles[i].input?resolveInput(s,puzzles[i].input.accept[0]):resolve(s,puzzles[i].answer);assert.equal(r.ok,true,'node '+i)}assert.equal(s.stage,11);for(const item of puzzles[11].requires)visit(s,item);assert.equal(rescue(s,0).ok,true);assert.equal(rescue(s,0).ok,false);assert.equal(s.rescue,1);assert.equal(rescue(s,1).ok,true);assert.equal(rescue(s,2).done,true);assert.equal(s.ending,'safe');assert.equal(resolve(s,1).reason,'ending');
 });
 test('progress and personal notes survive save/restore',()=>{
  const s=fresh();s.started=true;flag(s,'inspect-window');resolve(s,1);visit(s,'ad');s.personal='还不能判断窗外是什么';const restored=hydrate(JSON.stringify(s));assert.equal(restored.stage,1);assert.deepEqual(restored.seen,['ad']);assert.equal(restored.personal,s.personal);assert.ok(restored.flags.includes('inspect-window'));
@@ -21,3 +21,5 @@ test('visible names and approximate compound searches find their intended source
 });
 test('save reloading does not duplicate evidence and flags',()=>{const s=fresh();visit(s,'mail');visit(s,'mail');flag(s,'matched');flag(s,'matched');assert.equal(s.seen.length,1);assert.equal(s.flags.length,1)});
 test('each puzzle has available evidence and valid options',()=>{for(const p of puzzles){for(const id of p.requires)assert.ok(docs.some(d=>d.id===id)||['inspect-window','inspect-label','cup-played','matched','registered','trial-paused','trial-active','ceiling-played'].includes(id),id);if(p.options)assert.ok(p.answer>=0&&p.answer<p.options.length)}});
+test('input puzzles gate on evidence and accept normalized answers',()=>{
+ const s=fresh();s.stage=1;assert.equal(resolveInput(s,'三号楼').reason,'evidence');visit(s,'ad');flag(s,'inspect-label');assert.equal(resolveInput(s,'随便说说').ok,false);assert.equal(resolveInput(s,' ２ 号 楼 ').ok,true);assert.equal(s.stage,2);assert.equal(resolveInput(s,'二号楼').reason,'noinput')});
