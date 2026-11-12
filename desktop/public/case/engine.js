@@ -1,17 +1,17 @@
 import {docs,puzzles} from './content.js';
 // Keep the key so existing installations migrate in place.
 export const STORAGE='no-outside.save.v1';
-export function fresh(){return {version:2,started:false,stage:0,seen:[],flags:[],notes:[],evidence:[],messages:[],history:[],ending:null,audio:false,rescue:0,hints:{},errors:{},idle:{},settings:{rescueMode:'pointer'},linkActive:false}}
+export function fresh(){return {version:2,started:false,stage:0,seen:[],flags:[],notes:[],evidence:[],checked:[],messages:[],history:[],ending:null,audio:false,rescue:0,hints:{},errors:{},idle:{},settings:{rescueMode:'pointer'},linkActive:false}}
 export function hydrate(raw){
  try{
   const s=typeof raw==='string'?JSON.parse(raw):raw;
   if(!s||![1,2].includes(s.version)||!Number.isInteger(s.stage)||s.stage<0||s.stage>11)return fresh();
   const arr=(key,check)=>Array.isArray(s[key])?s[key].filter(check):[];
-  return {...fresh(),...s,version:2,seen:arr('seen',x=>docs.some(d=>d.id===x)),flags:arr('flags',x=>typeof x==='string'),notes:arr('notes',x=>typeof x==='string'),messages:arr('messages',x=>x&&typeof x.text==='string'),history:arr('history',x=>x&&typeof x==='object'),evidence:arr('evidence',x=>x&&typeof x.id==='string'&&typeof x.text==='string').slice(0,8),hints:s.hints&&typeof s.hints==='object'?s.hints:{},errors:s.errors&&typeof s.errors==='object'?s.errors:{},idle:s.idle&&typeof s.idle==='object'?s.idle:{},settings:{rescueMode:'pointer',...s.settings},rescue:Number.isInteger(s.rescue)?Math.max(0,Math.min(3,s.rescue)):0,ending:['safe','safe-marked','bad','stop'].includes(s.ending)?s.ending:null};
+  return {...fresh(),...s,version:2,seen:arr('seen',x=>docs.some(d=>d.id===x)),flags:arr('flags',x=>typeof x==='string'),notes:arr('notes',x=>typeof x==='string'),messages:arr('messages',x=>x&&typeof x.text==='string'),history:arr('history',x=>x&&typeof x==='object'),evidence:arr('evidence',x=>x&&typeof x.id==='string'&&typeof x.text==='string').slice(0,8),checked:arr('checked',x=>x&&typeof x.id==='string'&&typeof x.text==='string'),hints:s.hints&&typeof s.hints==='object'?s.hints:{},errors:s.errors&&typeof s.errors==='object'?s.errors:{},idle:s.idle&&typeof s.idle==='object'?s.idle:{},settings:{rescueMode:'pointer',...s.settings},rescue:Number.isInteger(s.rescue)?Math.max(0,Math.min(3,s.rescue)):0,ending:['safe','safe-marked','bad','stop'].includes(s.ending)?s.ending:null};
  }catch{return fresh()}
 }
 export function flag(s,id){if(!s.flags.includes(id))s.flags.push(id)}
-export function available(s,id){const d=docs.find(d=>d.id===id);return !!d&&(!d.release||s.stage>=d.release)&&!(id==='experiment'&&!known(s,'r03-unlocked'))}
+export function available(s,id){const d=docs.find(d=>d.id===id);return !!d&&(!d.release||s.stage>=d.release)&&!(id==='experiment'&&!known(s,'r03-unlocked'))&&!(id==='evidence-pack'&&!known(s,'evidence-sealed'))}
 export function visit(s,id){if(available(s,id)&&!s.seen.includes(id))s.seen.push(id)}
 export function known(s,id){return s.seen.includes(id)||s.flags.includes(id)}
 export function missing(s){return puzzles[s.stage].requires.filter(id=>!known(s,id))}
@@ -29,8 +29,11 @@ export function resolveCite(s,ids){
  const p=puzzles[s.stage];if(!p.cite||p.type==='cup'&&!known(s,'cup-delay'))return {ok:false,reason:'no-cite',message:'先告诉我慢了多久。'};
  if(!Array.isArray(ids)||ids.length<1||ids.length>2||new Set(ids).size!==ids.length)return wrong(s,p.cite.wrong);
  if(ids.some(id=>!s.evidence.some(x=>x.id===id)))return {ok:false,reason:'evidence',message:'先把这条记录记入便签。'};
+ if(p.stalePhoto&&ids.some(id=>id.startsWith(p.stalePhoto.cited+':'))&&!ids.some(id=>id.startsWith(p.stalePhoto.fallback+':')))return wrong(s,[p.stalePhoto.reply]);
  if(!p.cite.need.every(group=>group.some(id=>ids.includes(id)))||ids.some(id=>!p.cite.need.some(group=>group.includes(id))))return wrong(s,p.cite.wrong);
- return advance(s,ids,{citations:ids.map(id=>({...s.evidence.find(x=>x.id===id)}))});
+ const shown=ids.map(id=>({...s.evidence.find(x=>x.id===id)}));
+ s.checked.push(...shown);s.evidence=s.evidence.filter(x=>!ids.includes(x.id));
+ return advance(s,ids,{citations:shown});
 }
 export function resolve(s,answer){
  const blocked=gate(s);if(blocked)return blocked;
@@ -64,11 +67,18 @@ export function toggleLink(s){
  return {ok:true,active:s.linkActive};
 }
 export function normalizeInput(t){return String(t??'').normalize('NFKC').toLowerCase().replace(/\s+/g,'')}
+function accepted(p,norm){
+ if(p.input.accept.includes(norm))return true;
+ if(p.input.accept.includes(norm.replace(/^\d{4}年/,'')))return true;
+ let bare=norm.replace(/[\/\-\.年月日]/g,'');
+ if(/^\d{8}$/.test(bare))bare=bare.slice(4);
+ return p.input.accept.includes(bare);
+}
 export function resolveInput(s,text){
  const blocked=gate(s);if(blocked)return blocked;
  const p=puzzles[s.stage];if(!p.input||p.type==='cup'&&known(s,'cup-delay'))return {ok:false,reason:'noinput'};
  const norm=normalizeInput(text).replace(/[。！？?!]+$/g,'');
- if(!p.input.accept.includes(norm))return wrong(s,p.input.wrong);
+ if(!accepted(p,norm))return wrong(s,p.input.wrong);
  if(p.type==='cup'){flag(s,'cup-delay');s.history.push({stage:4,answer:norm,partial:true});return {ok:true,partial:true,messages:['还有那只手。指给我看。']}}
  return advance(s,norm);
 }
@@ -82,8 +92,10 @@ export function rescue(s,answer){
 }
 export function finishRescue(s,marked=false){if(s.stage!==11||s.rescue!==3||s.ending||marked&&!canMarkRope(s))return {ok:false};s.ending=marked?'safe-marked':'safe';s.linkActive=false;return {ok:true}}
 export function completeMap(s,count=1){if(!known(s,'registered')||s.ending)return {ok:false};s.checkpoint=structuredClone({...s,checkpoint:undefined});s.terminalCount=Math.max(1,count);s.ending='bad';s.endingAt=Date.now();s.linkActive=false;return {ok:true}}
+export function sealEvidence(s){if(s.stage!==11||s.ending)return {ok:false};flag(s,'evidence-sealed');visit(s,'evidence-pack');return {ok:true}}
+export function registerOutside(s){if(s.ending!=='safe-marked'||s.flags.includes('outside-registered'))return {ok:false};flag(s,'outside-registered');return {ok:true}}
 export function search(query){
  const q=query.normalize('NFKC').toLowerCase().replace(/[，。？?、·_：:]/g,' ').trim();if(!q)return docs.filter(d=>d.kind==='web');
  const terms=q.split(/\s+/).filter(Boolean);
- return docs.map(d=>{const text=(d.title+' '+d.tags+' '+d.body.replace(/<[^>]*>/g,' ')).toLowerCase();let n=terms.reduce((n,t)=>n+(text.includes(t)?3:0),0);if(q.includes('hc')&&d.id==='company')n+=6;if(q.includes('r-03')&&d.id==='experiment')n+=10;for(const token of ['松亭','安顺','宽带','陈苇','陈小苇','青苇','沈屹','户型','外墙','榆宁','永新','测绳','撤回','窗外'])if(q.includes(token)&&text.includes(token))n+=4;return {d,n}}).filter(x=>x.n>0).sort((a,b)=>b.n-a.n).map(x=>x.d);
+ return docs.map(d=>{const text=(d.title+' '+d.tags+' '+d.body.replace(/<[^>]*>/g,' ')).toLowerCase();let n=terms.reduce((n,t)=>n+(text.includes(t)?3:0),0);if(q.includes('hc')&&d.id==='company')n+=6;if(q.includes('r-03')&&d.id==='experiment')n+=10;if((q.includes('st-2e')||q.includes('st2e'))&&d.id==='ad')n+=6;for(const token of ['松亭','安顺','宽带','陈苇','陈小苇','青苇','沈屹','户型','外墙','榆宁','永新','测绳','撤回','窗外'])if(q.includes(token)&&text.includes(token))n+=4;return {d,n}}).filter(x=>x.n>0).sort((a,b)=>b.n-a.n).map(x=>x.d);
 }

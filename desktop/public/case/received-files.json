@@ -1,17 +1,17 @@
 [
   {
     "name": "陆遥 · 进入前的现场记录.url",
-    "shortcut": "[InternetShortcut]\nBaseURL=CaseReader\nURL=entrance\nIconFile=/System/Icons/documents.webp\nComment=\n",
+    "shortcut": "[InternetShortcut]\nBaseURL=CaseReader\nURL=entrance\nIconFile=/System/Icons/thumbs/entrance.png\nComment=\n",
     "stage": 6
   },
   {
     "name": "陆遥 · 门后的绿色走廊.url",
-    "shortcut": "[InternetShortcut]\nBaseURL=CaseReader\nURL=green\nIconFile=/System/Icons/documents.webp\nComment=\n",
+    "shortcut": "[InternetShortcut]\nBaseURL=CaseReader\nURL=green\nIconFile=/System/Icons/thumbs/green.png\nComment=\n",
     "stage": 8
   },
   {
     "name": "器材卡 · 橙色放线绳.url",
-    "shortcut": "[InternetShortcut]\nBaseURL=CaseReader\nURL=rope\nIconFile=/System/Icons/documents.webp\nComment=\n",
+    "shortcut": "[InternetShortcut]\nBaseURL=CaseReader\nURL=rope\nIconFile=/System/Icons/thumbs/rope.png\nComment=\n",
     "stage": 10
   },
   {
@@ -21,7 +21,7 @@
   },
   {
     "name": "陆遥 · 墙上的铅笔字.url",
-    "shortcut": "[InternetShortcut]\nBaseURL=CaseReader\nURL=trace\nIconFile=/System/Icons/documents.webp\nComment=\n",
+    "shortcut": "[InternetShortcut]\nBaseURL=CaseReader\nURL=trace\nIconFile=/System/Icons/thumbs/trace.png\nComment=\n",
     "stage": 9
   },
   {

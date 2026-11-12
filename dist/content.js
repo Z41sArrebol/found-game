@@ -13,7 +13,7 @@ export const docs=[
     "kind": "web",
     "url": "songting-fang.cn/rent/2019-1103",
     "folder": "房屋",
-    "tags": "松亭 安顺 宽带 陈小苇 陈苇 青苇 转租 二号楼 位置 维修",
+    "tags": "松亭 安顺 宽带 陈小苇 陈苇 青苇 转租 二号楼 位置 维修 st-2e st2e",
     "body": "<div class=\"web-brand\">松亭租住 / 个人房源</div><h2>二号楼东侧顶层，安静，适合在家工作</h2><p class=\"meta\">陈小苇 · 发布于2019年11月3日 · 已下架</p><p>松亭公寓二号楼，东侧顶层。家具有点旧，不过桌子够大。宽带已经交到年底，安顺宽带松亭片区。</p><p>工作安排有变，想提前退租。押金和房东谈好了再交接，有问题站内问就行。</p><blockquote>11月7日补充：朝向之前写错了。房东说不用改，看屋里就行。</blockquote><p>备份有需要的资料请找「青苇工作间」。</p><div class=\"comments\"><b>住客742</b>　窗户朝西吗？<hr><b>陈小苇 <span data-cite=\"ad:account\">qingwei_1107</span></b>　白天没什么直射光。你最好自己来看。</div>"
   },
   {
@@ -32,7 +32,16 @@ export const docs=[
     "url": "songting-wuye.cn/archive/2018-06",
     "folder": "房屋",
     "tags": "松亭 外墙 外景 二号楼 改造 修缮 西立面 窗",
-    "body": "<div class=\"web-brand\">松亭物业 / 通知公告</div><h2>二号楼西立面修缮公示</h2><p class=\"meta\">2018年6月21日 · 附原始记录</p><figure><img data-cite=\"exterior:photo\" data-label=\"B2-W-T 西立面原始照片\" src=\"assets/exterior.png\" alt=\"老公寓西侧外墙\" loading=\"lazy\"><figcaption data-cite=\"exterior:caption\">照片定位标记 B2-W-T / 西侧顶层</figcaption></figure><p>本次仅修补墙面。</p>"
+    "body": "<div class=\"web-brand\">松亭物业 / 通知公告</div><h2>二号楼西立面修缮公示</h2><p class=\"meta\">2018年6月21日 · 附原始记录</p><figure><img data-cite=\"exterior:photo\" data-label=\"B2-W-T 西立面原始照片\" src=\"assets/exterior.png\" alt=\"老公寓西侧外墙\" loading=\"lazy\"><figcaption data-cite=\"exterior:caption\">2018.06 修缮前存档 / 定位标记 B2-W-T 西侧顶层</figcaption></figure><p>本次仅修补墙面。</p>"
+  },
+  {
+    "id": "exterior-2026",
+    "title": "二号楼例行巡检留影（2026.03）",
+    "kind": "web",
+    "url": "songting-wuye.cn/archive/2026-03",
+    "folder": "房屋",
+    "tags": "松亭 外墙 外景 二号楼 巡检 留影 2026 例行 墙面",
+    "body": "<div class=\"web-brand\">松亭物业 / 通知公告</div><h2>二号楼例行巡检留影</h2><p class=\"meta\">2026年3月14日 · 例行记录</p><figure><img data-cite=\"exterior-2026:photo\" data-label=\"二号楼西立面 · 2026年3月巡检留影\" src=\"assets/exterior-2026.png\" alt=\"二号楼西立面巡检照片\" loading=\"lazy\"><figcaption data-cite=\"exterior-2026:caption\">2026.03 例行巡检 / 西侧顶层留影</figcaption></figure><p>墙面状况良好，无需修补。</p>"
   },
   {
     "id": "notes",
@@ -152,6 +161,14 @@ export const docs=[
     "body": "<h2>尾款记录</h2><p>给社区做的老照片整理还有八百元没结。</p><p>下周三前再问一次。别把这次的硬盘资料和社区照片混在一起。</p><p>午饭盒记得扔。</p>"
   },
   {
+    "id": "evidence-pack",
+    "title": "证据包 · 现场回传封存",
+    "kind": "file",
+    "folder": "工作记录",
+    "tags": "证据包 封存 回传 副本 移交",
+    "body": "<p class=\"doc-kicker\">许澄 / 当天整理</p><h2>现场回传封存副本</h2><p>以下为本次会话收到的现场回传副本，与收到时逐字节一致，不含任何活动关联。撤回完成后随证据一并移交外部协助人员。</p><table><tr><th>附件</th><th>状态</th></tr><tr><td>陆遥 · 进入前的现场记录</td><td>只读</td></tr><tr><td>陆遥 · 门后的绿色走廊</td><td>只读</td></tr><tr><td>物业 · 门外接应记录</td><td>只读</td></tr><tr><td>陆遥 · 墙上的铅笔字</td><td>只读</td></tr><tr><td>陆遥 · 关联操作回报</td><td>只读</td></tr><tr><td>器材卡 · 橙色放线绳</td><td>只读</td></tr></table><p class=\"muted\">副本固定不变。现场以后发生任何变化，都以这份包为准。</p>"
+  },
+  {
     "id": "trace",
     "title": "陆遥 · 墙上的铅笔字",
     "kind": "file",
@@ -249,6 +266,7 @@ export const puzzles=[
     "hint": [
       "搜索「松亭 户型」与「松亭 外墙」。",
       "户型图的西墙与南侧阳台有不同用途。",
+      "物业存档里有两张外墙照片，图注上的日期不一样。",
       "室内西窗的位置，在外立面是连续砖墙。"
     ],
     "message": [
@@ -256,6 +274,11 @@ export const puzzles=[
       "你找到租客名字了吧？看看她之前留过什么。"
     ],
     "type": "cite",
+    "stalePhoto": {
+      "cited": "exterior-2026",
+      "fallback": "exterior",
+      "reply": "物业说这是今年三月巡检拍的。……可档案里写着，2018 年这片墙修过一次。你把修缮前那张旧的调出来，跟我一起对？"
+    },
     "cite": {
       "need": [
         [
@@ -263,7 +286,9 @@ export const puzzles=[
         ],
         [
           "exterior:photo",
-          "exterior:caption"
+          "exterior:caption",
+          "exterior-2026:photo",
+          "exterior-2026:caption"
         ]
       ],
       "wrong": [
@@ -922,32 +947,32 @@ export const timelineCards=[
 export const idle={
   "6": [
     "我还在。",
-    "你那边没事吧",
+    "走廊好长。",
     "……"
   ],
   "7": [
     "我还在。",
-    "你那边没事吧",
+    "告示又回来了。",
     "……"
   ],
   "8": [
-    "我还在。",
-    "你那边没事吧",
+    "我没动。",
+    "门后有光。",
     "……"
   ],
   "9": [
-    "我还在。",
-    "你那边没事吧",
+    "灯又闪了。",
+    "你还在吧。",
     "……"
   ],
   "10": [
-    "我还在。",
-    "你那边没事吧",
+    "绳在手里。",
+    "你快点。",
     "……"
   ],
   "11": [
-    "我还在。",
-    "你那边没事吧",
+    "我等你。",
+    "双结在。",
     "……"
   ]
 };

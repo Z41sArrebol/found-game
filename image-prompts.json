@@ -63,5 +63,10 @@
     "key": "street",
     "prompt": "Use case: photorealistic-natural. Create ONE landscape 16:10 slightly tilted handheld smartphone photograph of an ordinary Chinese residential street intersection at dusk/late afternoon, taken hurriedly while walking. Wet asphalt or worn sidewalk in foreground, a few parked scooters, old street trees, normal warm streetlamp and shop sign glow in the distance, and the blurred taillight of a car driving away at the right edge of the frame. A mundane, relieving snapshot after escaping indoors. No horror, no text, no UI.",
     "mode": "built-in generate"
+  },
+  {
+    "key": "exterior-2026",
+    "prompt": "Composite, not model-generated: exterior.png reframed (3.5% inset crop resized back, +2 brightness, +3/-2 RGB warmth shift) with the real \"设备维护 2026.03\" maintenance label transplanted from entrance.png pixels at (1398,50)-(1497,136), rotated -2.4deg, feathered 6px mask, brightness 0.92, pasted at (1064,566) beside the cable-tray junction box. Script: .runtime/exterior-2026.py.",
+    "mode": "PIL composite"
   }
 ]

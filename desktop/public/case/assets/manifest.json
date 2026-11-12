@@ -30,6 +30,11 @@
     "bytes": 2633625
   },
   {
+    "name": "exterior-2026.png",
+    "sha256": "08c704aa83e0f36d3b5066e199ebffe7b4b0db0cd3bfdd37f8a8aad5930e5057",
+    "bytes": 2391228
+  },
+  {
     "name": "exterior.png",
     "sha256": "0c2cf2aa16ab2be2be4026880de5db61386e0b3c7caf5dd2b5264891620a2e34",
     "bytes": 2617729

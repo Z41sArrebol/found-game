@@ -68,11 +68,13 @@ for(const [name,app,url,icon] of [
 ])await put(`${desktop}/${name}.url`,shortcut(app,url,icon));
 const archive='public/Users/Public/Documents/HC_ARCHIVE';
 await put(`${archive}/现场回传/desktop.ini`,'[ShellClassInfo]\nIconFile=/System/Icons/documents.webp\n');
-await put(`${archive}/原始影像/041-W03_客厅西窗.jpg.url`,shortcut('CaseReader','room','photo.webp','原始记录，含局部放大观察'));
+const THUMB_ICONS={room:'room',archives:'archives',entrance:'entrance',green:'green',rope:'rope',trace:'trace',ceiling:'ceiling',cup:'cup'};
+await put(`${archive}/原始影像/041-W03_客厅西窗.jpg.url`,shortcut('CaseReader','room',THUMB_ICONS.room?`thumbs/${THUMB_ICONS.room}.png`:'photo.webp','原始记录，含局部放大观察'));
 const received=[];
 for(const d of docs.filter(d=>d.kind!=='web')){
  const name=d.title.replace(/[<>:"/\\|?*]/g,'_')+'.url';
- const body=shortcut('CaseReader',d.id,d.kind==='video'?'vlc.webp':'documents.webp');
+ const icon=THUMB_ICONS[d.id]?`thumbs/${THUMB_ICONS[d.id]}.png`:(d.kind==='video'?'vlc.webp':'documents.webp');
+ const body=shortcut('CaseReader',d.id,icon);
  if(d.folder==='现场回传'){
   await fs.rm(path.join(root,`${archive}/${d.folder}/${name}`),{force:true});
   received.push({name,shortcut:body,stage:d.release||6});

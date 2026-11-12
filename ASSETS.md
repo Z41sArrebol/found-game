@@ -30,3 +30,12 @@
 | street.png | safe / safe-marked 街口照片 |
 
 壁纸变体有轻微生成纹理差异。原始调查附件固定不变，仅桌面背景随阶段切换。
+
+2026-11-13 外墙伪通过陷阱与缩略图：
+
+| 文件 | 用途 |
+| --- | --- |
+| exterior-2026.png | 2026 年 3 月物业例行巡检留影。以 exterior.png 为底重新取景并做轻微曝光/色温差，标签「设备维护 2026.03」自 entrance.png 真实像素移植（PIL 合成，脚本见 .runtime/exterior-2026.py），非模型生成 |
+| System/Icons/thumbs/*.png | HC_ARCHIVE 快捷方式的照片缩略图（room/archives/entrance/green/rope/trace/ceiling/cup/exterior），160×160 居中裁剪 |
+
+exterior-2026 与 2018 修缮前存档的差异只有取景、色温和新标签，不含空调外机等未实际改动的细节；对应台词只引用日期与修缮记录。
