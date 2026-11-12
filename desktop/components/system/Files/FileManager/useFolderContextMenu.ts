@@ -394,6 +394,17 @@ const useFolderContextMenu = (
       { action: () => updateFolder(url), label: "刷新" },
       ...(isDesktop
         ? [
+            {
+              action: () => {
+                try {
+                  Object.keys(localStorage)
+                    .filter((k) => k.startsWith("no-outside"))
+                    .forEach((k) => localStorage.removeItem(k));
+                } catch {}
+                window.location.reload();
+              },
+              label: "重新开始调查",
+            },
             MENU_SEPERATOR,
             {
               label: "背景",
