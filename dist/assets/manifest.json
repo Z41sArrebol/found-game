@@ -20,6 +20,11 @@
     "bytes": 2186820
   },
   {
+    "name": "cup-hand.png",
+    "sha256": "e2df628f1ab93f43154654dd48c0a3f3edf7d7849498df51f537437ce8400458",
+    "bytes": 2168001
+  },
+  {
     "name": "entrance.png",
     "sha256": "54c4f826c0eb0ada1512eedd2ec7ef52cc147c622ddb4c4f2f710553c7d30a53",
     "bytes": 2633625
@@ -33,5 +38,30 @@
     "name": "room.png",
     "sha256": "2902756d960073af3cc9e0be64bd899b545d621eb16bdb9d826f1d603b6b60db",
     "bytes": 2183853
+  },
+  {
+    "name": "rope.png",
+    "sha256": "09ff012570c22c4b44ac9e4c499455880620474369886c9714ddbc869f4f0b08",
+    "bytes": 3186861
+  },
+  {
+    "name": "street.png",
+    "sha256": "e15812d2e588e798041e08d18e355b31e18260a0d79e1374c2fad676b7157993",
+    "bytes": 2735917
+  },
+  {
+    "name": "trace.png",
+    "sha256": "7d82001b099f473697e834416ad4a34a289118a322a828ce7e4c45ec561ea0fb",
+    "bytes": 2315547
+  },
+  {
+    "name": "wallpaper-stage9.png",
+    "sha256": "dec1e3854e447e5b3e9ebe87e48f5687ecd114fdfcc677895db058da5bef79c3",
+    "bytes": 2653524
+  },
+  {
+    "name": "wallpaper.png",
+    "sha256": "deb63f80aebb76425f32dd795a735a061de821e40916bf28c54cd14dac107292",
+    "bytes": 2894122
   }
 ]

@@ -14,6 +14,7 @@ import {
 } from "utils/constants";
 import { copyBufferUrl, isYouTubeUrl } from "utils/functions";
 import type * as Ipfs from "utils/ipfs";
+import { getCachedShortcut, getShortcutInfo } from "components/system/Files/FileEntry/functions";
 
 type UseFile = (pid: string, icon?: string) => Promise<void>;
 
@@ -21,10 +22,20 @@ const loadIpfs = (): Promise<typeof Ipfs> => import("utils/ipfs");
 
 const useFile = (url: string, path: string): UseFile => {
   const { setForegroundId, updateRecentFiles } = useSessionActions();
-  const { createPath, updateFolder } = useFileSystemActions();
+  const { createPath, updateFolder, readFile } = useFileSystemActions();
   const { minimize, open, url: setUrl } = useProcessesActions();
 
   return async (pid: string, icon?: string) => {
+    let runUrl = url;
+    // A double-click can arrive before the icon/info effect has resolved.
+    // Resolve the shortcut itself instead of opening an empty Open With dialog.
+    if (!pid && extname(path).toLowerCase() === ".url") {
+      const cached = getCachedShortcut(path);
+      const shortcut = cached.pid ? cached : getShortcutInfo(await readFile(path));
+      pid = shortcut.pid;
+      runUrl = shortcut.url;
+      icon ||= shortcut.icon;
+    }
     const {
       icon: processIcon,
       preferProcessIcon,
@@ -35,7 +46,6 @@ const useFile = (url: string, path: string): UseFile => {
           (id) => id === pid || id.startsWith(`${pid}${PROCESS_DELIMITER}`)
         )
       : "";
-    let runUrl = url;
 
     if (url.startsWith("ipfs://")) {
       const { getIpfsFileName, getIpfsResource } = await loadIpfs();

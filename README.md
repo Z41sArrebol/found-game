@@ -4,7 +4,7 @@
 
 朋友寄来一块旧硬盘，请你找一张能看清窗外的照片。你在文件夹、聊天记录、旧网页和测绘档案之间寻找线索，逐渐发现，这些房间似乎没有一个稳定的外部。
 
-桌面环境直接采用 [Dustin Brett 的 daedalOS](https://github.com/DustinBrett/daedalOS)，游戏以独立应用接入它的窗口与文件系统。当前版本为 **v0.2.0 玩法原型**，尚未公开部署。
+桌面环境直接采用 [Dustin Brett 的 daedalOS](https://github.com/DustinBrett/daedalOS)，游戏以独立应用接入它的窗口与文件系统。当前版本为 **v0.5.0-rc.1 玩法原型**，尚未公开部署。
 
 ![游戏桌面截图](docs/images/desktop.png)
 
@@ -20,7 +20,7 @@
 
 ## 从源码启动
 
-建议使用 **Node.js 22 LTS** 及其附带的 npm，本次验证版本为 Node.js 22.23.1。仓库保留了 daedalOS 的第三方应用资源，首次下载和安装可能较慢。
+建议使用 **Node.js 22 LTS** 及其附带的 npm，本次验证版本为 Node.js 22.23.1。仓库已裁剪游戏未使用的模拟器、游戏与编辑器资源。
 
 ```bash
 git clone https://github.com/Z41sArrebol/found-game.git
@@ -63,8 +63,10 @@ npm run dev:desktop
 | --- | --- |
 | `dist/content.js` | 当前剧情文本、调查问题、资料和结局 |
 | `dist/engine.js` | 证据条件、节点推进、搜索与存档逻辑 |
-| `dist/app.js` | 调查应用的交互逻辑，同时保留早期桌面原型 |
-| `dist/sim.css` | 面板拟真皮肤（微信/OneNote/Edge/照片查看器/测量软件），仅面板模式生效 |
+| `dist/app.js` | 调查应用交互与桌面桥接源 |
+| `dist/sim.css` | 面板软件皮肤；虚构品牌覆盖在 revision.css |
+| `dist/rescue.js` / `dist/sound.js` | 触觉路径与合成声音 |
+| `dist/revision.css` | 虚构软件外观与新交互样式 |
 | `dist/assets/` | 游戏影像素材的编辑源目录 |
 | `scripts/integrate-daedalos.mjs` | 内容同步、窗口内容样式、快捷方式与进程注册 |
 | `desktop/components/apps/CaseApp/` | 游戏应用与 daedalOS 原生窗口的通信桥接 |
@@ -89,9 +91,11 @@ Cross-Origin-Embedder-Policy: credentialless
 
 ## 当前完成度
 
-剧情引擎的7项测试、生产构建和类型检查已通过。原生桌面中的文件导航、窗口操作、照片观察、搜索与跨窗口同步做过实际浏览器验证，见 [桌面验收记录](DESKTOP-VALIDATION.md)。
+修订计划的剧情、证物引用、12 节点新玩法、量帧、鼠标/方向键/简化救援、活帖子、活动终端统计、递归视点、声音与静态壁纸已实现。六张补图使用内置 image_gen 生成并纳入素材清单。原始记录在游玩过程中固定不变。
 
-尚未在新桌面中逐步重玩完整剧情，也没有经过陌生玩家的难度、恐怖感和实际游玩时长测试。影像回放采用生成静帧与分段文字，原版自带的第三方模拟器和附加应用未逐项验证。
+验收与已知限制见 [修订验收记录](docs/revision-validation-2026-11-12.md)。自动测试验证可达性、存档迁移与窗口集成；至少 3 名陌生玩家的难度、悬疑感和游玩时长测试仍待实际组织。
+
+新增命令 `npm run test:browser` 验证完整剧情，`npm run test:desktop` 验证原生桌面与全屏救援，`npm run test:interaction` 验证空闲提示与窄窗口；先启动生产静态服务，并按此顺序运行。可用环境变量 `QA_URL` 指定另一个本地端口。测试使用独立浏览器上下文，不修改平时使用的存档。
 
 ## 来源与相关文档
 

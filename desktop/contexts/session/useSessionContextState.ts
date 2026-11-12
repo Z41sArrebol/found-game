@@ -282,7 +282,7 @@ const useSessionContextState = (
         }
         if (session.themeName) setThemeName(session.themeName);
         if (session.wallpaperImage) {
-          setWallpaper(session.wallpaperImage, session.wallpaperFit);
+          setWallpaper(session.wallpaperImage === "GALAXY" ? DEFAULT_WALLPAPER : session.wallpaperImage, session.wallpaperFit);
         }
         if (session.sortOrders && Object.keys(session.sortOrders).length > 0) {
           setSortOrders(session.sortOrders);

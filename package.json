@@ -1,6 +1,6 @@
 {
   "name": "no-outside",
-  "version": "0.2.0",
+  "version": "0.5.0-rc.1",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,7 +9,10 @@
     "sync:game": "node scripts/integrate-daedalos.mjs",
     "build:desktop": "npm run sync:game && npm --prefix desktop run build",
     "predev:desktop": "npm run sync:game && npm --prefix desktop run build:prebuild",
-    "dev:desktop": "npm --prefix desktop run dev -- --hostname 127.0.0.1 --port 4179"
+    "dev:desktop": "npm --prefix desktop run dev -- --hostname 127.0.0.1 --port 4179",
+    "test:browser": "node scripts/browser-qa.mjs",
+    "test:desktop": "node scripts/desktop-qa.mjs",
+    "test:interaction": "node scripts/interaction-qa.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.1"

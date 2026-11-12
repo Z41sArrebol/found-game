@@ -1,11 +1,23 @@
 import { useEffect, useRef } from "react";
 import { useProcessesActions } from "contexts/process";
-import { useSessionLoaded, useWindowState } from "contexts/session";
+import { useSessionLoaded, useWindowState, useSessionActions } from "contexts/session";
 
 const useCaseBoot = (): void => {
   const ready = useSessionLoaded();
   const booted = useRef(false);
   const { open } = useProcessesActions();
+  const { setWallpaper } = useSessionActions();
+  useEffect(() => {
+    if (!ready) return;
+    const sync = (): void => {
+      let stage = 0;
+      try { stage = JSON.parse(localStorage.getItem("no-outside.save.v1") || "{}").stage || 0; } catch { /* New save */ }
+      setWallpaper(stage >= 9 ? "/System/Wallpapers/wallpaper-stage9.png" : "/System/Wallpapers/wallpaper.png", "fill");
+    };
+    const receive = (e: StorageEvent): void => { if (e.key === "no-outside.save.v1") sync(); };
+    sync(); window.addEventListener("storage", receive);
+    return () => window.removeEventListener("storage", receive);
+  }, [ready, setWallpaper]);
   const fileWindow = useWindowState("FileExplorer__/Users/Public/Documents/HC_ARCHIVE");
   const chatWindow = useWindowState("CaseChat");
   useEffect(() => {

@@ -47,6 +47,7 @@ class Document extends NextDocument {
         <body>
           <Main />
           <NextScript />
+          <script type="module" src="/case/desktop-effects.js" />
         </body>
       </Html>
     );

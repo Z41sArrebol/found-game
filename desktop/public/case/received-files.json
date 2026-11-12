@@ -12,11 +12,21 @@
   {
     "name": "器材卡 · 橙色放线绳.url",
     "shortcut": "[InternetShortcut]\nBaseURL=CaseReader\nURL=rope\nIconFile=/System/Icons/documents.webp\nComment=\n",
-    "stage": 11
+    "stage": 10
   },
   {
     "name": "物业 · 门外接应记录.url",
     "shortcut": "[InternetShortcut]\nBaseURL=CaseReader\nURL=outside\nIconFile=/System/Icons/documents.webp\nComment=\n",
+    "stage": 7
+  },
+  {
+    "name": "陆遥 · 墙上的铅笔字.url",
+    "shortcut": "[InternetShortcut]\nBaseURL=CaseReader\nURL=trace\nIconFile=/System/Icons/documents.webp\nComment=\n",
+    "stage": 9
+  },
+  {
+    "name": "陆遥 · 关联操作回报.url",
+    "shortcut": "[InternetShortcut]\nBaseURL=CaseReader\nURL=trial\nIconFile=/System/Icons/documents.webp\nComment=\n",
     "stage": 7
   }
 ]

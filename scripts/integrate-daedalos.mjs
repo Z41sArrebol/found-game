@@ -5,13 +5,15 @@ const root=path.resolve(import.meta.dirname,'../desktop');
 const put=async(p,s)=>{await fs.mkdir(path.dirname(path.join(root,p)),{recursive:true});await fs.writeFile(path.join(root,p),s)};
 const replace=async(p,a,b)=>{const file=path.join(root,p);let s=await fs.readFile(file,'utf8');if(!s.includes(a)){if(s.includes(b))return;throw Error('Missing anchor '+p)}await fs.writeFile(file,s.replace(a,b))};
 await fs.mkdir(path.join(root,'public/case'),{recursive:true});
-for(const file of ['content.js','engine.js','style.css','interface.css','sim.css'])await fs.copyFile(path.resolve(import.meta.dirname,'../dist',file),path.join(root,'public/case',file));
+for(const file of ['content.js','engine.js','style.css','interface.css','sim.css','revision.css','rescue.js','sound.js','terminals.js','desktop-effects.js'])await fs.copyFile(path.resolve(import.meta.dirname,'../dist',file),path.join(root,'public/case',file));
 await fs.cp(path.resolve(import.meta.dirname,'../dist/assets'),path.join(root,'public/case/assets'),{recursive:true});
+for(const name of ['wallpaper','wallpaper-stage9']){await fs.mkdir(path.join(root,'public/System/Wallpapers'),{recursive:true});await fs.copyFile(path.resolve(import.meta.dirname,'../dist/assets/'+name+'.png'),path.join(root,'public/System/Wallpapers/'+name+'.png'))}
+for(const size of ['16x16','32x32','48x48','96x96','144x144'])for(const name of ['echo','margin','compass'])await fs.copyFile(path.join(root,'public/System/Icons/'+name+'.svg'),path.join(root,'public/System/Icons/'+size+'/'+name+'.svg'));
 let app=await fs.readFile(path.resolve(import.meta.dirname,'../dist/app.js'),'utf8');
 app=app.replace("const $=s=>document.querySelector(s);",`const $=s=>document.querySelector(s);
 const params=new URLSearchParams(location.search), pane=params.get('pane')||'notes';
 const send=(app,doc)=>parent.postMessage({type:'no-outside:open',app,doc},location.origin);`);
-app=app.replace(/function render\(\)\{[^\n]+\}/,`function render(){if(state.ending){if(pane==='notes'){renderEnding();return}send('notes')}renderDesktop()}`);
+app=app.replace(/function render\(\)\{[^\n]+\}/,`function render(){if(waitForEnding())return;if(state.ending){if(pane==='notes'){renderEnding();return}if(!ui.endingNotified){ui.endingNotified=true;send('notes')}}else ui.endingNotified=false;renderDesktop()}`);
 app=app.replace("if(previous===6){ui.active=false;", "if(previous===6){ui.active=false;state.linkActive=false;");
 app=app.replace("if(a==='register'){flag(state,'registered');ui.active=true;", "if(a==='register'){flag(state,'registered');ui.active=true;state.linkActive=true;");
 app=app.replace("if(a==='toggle-link'){ui.active=!ui.active;", "if(a==='toggle-link'){ui.active=!ui.active;state.linkActive=ui.active;");
@@ -26,9 +28,9 @@ app=app.replace(/function renderDesktop\(\)\{[\s\S]*?\nfunction windowHTML/,`fun
 function windowHTML`);
 app=app.replace(/function focus\(id\)\{[^\n]+\}/,`function focus(id){if(!wins[id])return;wins[id].open=true;wins[id].min=false;if(id==='chat')ui.unread=0;if(id!==pane)send(id,ui.reader)}`);
 app=app.replace(/function openDoc\(id\)\{[^\n]+\}/,`function openDoc(id){
- if(id==='space'){openWindow('space');return}
+ touch();if(id==='space'){openWindow('space');return}
  if(id==='room')flag(state,'room-viewed');else visit(state,id);
- ui.reader=id;ui.videoFrame=0;ui.zoom=1;ui.observation='';save();
+ ui.reader=id;ui.videoFrame=0;ui.zoom=1;ui.photoOrigin=[50,50];ui.observation='';save();
  if(pane!=='reader')send('reader',id);else parent.postMessage({type:'no-outside:title',title:id==='room'?'041-W03_客厅西窗.jpg':docs.find(d=>d.id===id)?.title||'影像查看器'},location.origin);
  render();
 }`);
@@ -36,11 +38,11 @@ app=app.replace(/window.addEventListener\('resize',[^\n]+\);/,`window.addEventLi
 app=app.replace(/\nrender\(\);\s*$/,`
 window.addEventListener('storage',e=>{if(e.key===TYPE_KEY){ui.typing=Boolean(e.newValue)&&Date.now()-Number(JSON.parse(e.newValue||'0'))<10000;if(pane==='chat')render()}if(e.key===STORAGE){state=hydrate(e.newValue);ui.active=Boolean(state.linkActive);render()}});
 ui.active=Boolean(state.linkActive);
-if(!state.started){state.started=true;state.messages=introMessages.map(([time,text])=>({time,text,who:'lu'}));save()}
+if(!state.started){state.started=true;seedIntro()}
 if(pane==='reader'){openDoc(params.get('doc')||'room')}else render();
 `);
 await put('public/case/pane.js',app);
-await put('public/case/pane.html',`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>没有窗外</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="interface.css"><link rel="stylesheet" href="pane.css"><link rel="stylesheet" href="sim.css"></head><body><div id="app"></div><div id="toast" role="status"></div><dialog id="dialog"></dialog><script type="module" src="pane.js"></script></body></html>`);
+await put('public/case/pane.html',`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>没有窗外</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="interface.css"><link rel="stylesheet" href="pane.css"><link rel="stylesheet" href="sim.css"><link rel="stylesheet" href="revision.css"></head><body><div id="app"></div><div id="toast" role="status"></div><dialog id="dialog"></dialog><script type="module" src="pane.js"></script></body></html>`);
 await put('public/case/pane.css',`
 :root{color-scheme:light;--text:#252a30;--muted:#626a73;--line:#dce1e6;--accent:#0078d4;--serif:"Noto Serif SC","Songti SC",serif;--sans:"Segoe UI","Noto Sans SC","Microsoft YaHei",sans-serif}
 html,body,#app{width:100%;height:100%;min-width:0;margin:0;background:#f7f8fa;overflow:hidden;font-family:var(--sans);font-size:15px;color:var(--text)}
@@ -62,7 +64,7 @@ const shortcut=(app,url,icon,comment='')=>`[InternetShortcut]\nBaseURL=${app}\nU
 const desktop='public/Users/Public/Desktop';
 for(const [name,app,url,icon] of [
  ['HC_ARCHIVE 移动硬盘','FileExplorer','/Users/Public/Documents/HC_ARCHIVE','mounted.webp'],
- ['陆遥','CaseChat','','wechat.png'],['芦苇搜索','CaseSearch','','chromium.webp'],['调查便签','CaseNotes','','tinymce.webp'],['空间复核','CaseSpace','','executable.webp']
+ ['陆遥','CaseChat','','echo.svg'],['芦苇搜索','CaseSearch','','compass.svg'],['调查便签','CaseNotes','','margin.svg'],['空间复核','CaseSpace','','executable.webp']
 ])await put(`${desktop}/${name}.url`,shortcut(app,url,icon));
 const archive='public/Users/Public/Documents/HC_ARCHIVE';
 await put(`${archive}/现场回传/desktop.ini`,'[ShellClassInfo]\nIconFile=/System/Icons/documents.webp\n');
@@ -73,16 +75,17 @@ for(const d of docs.filter(d=>d.kind!=='web')){
  const body=shortcut('CaseReader',d.id,d.kind==='video'?'vlc.webp':'documents.webp');
  if(d.folder==='现场回传'){
   await fs.rm(path.join(root,`${archive}/${d.folder}/${name}`),{force:true});
-  received.push({name,shortcut:body,stage:({entrance:6,green:8,rope:11,outside:7})[d.id]||6});
+  received.push({name,shortcut:body,stage:d.release||6});
  }else await put(`${archive}/${d.folder}/${name}`,body);
 }
 await put('public/case/received-files.json',JSON.stringify(received,null,2));
-await put(`${archive}/开始之前.txt`,'陆遥发来了一块旧硬盘。\n\n先打开「原始影像」里的客厅西窗照片，放大看看。\n资料里出现的名字、地点，丢进「芦苇搜索」就能查。\n有想法就记在「调查便签」里，按自己的节奏来。\n\n窗口能拖动缩放，也能最小化，任务栏能唤回来。\n原始文件不会随着调查被改写。\n');
+await fs.rm(path.join(root,`${archive}/开始之前.txt`),{force:true});
+await put(`${archive}/开始之前.txt.url`,shortcut('CaseReader','welcome','documents.webp'));
 await put(`${desktop}/开始之前.url`,shortcut('CaseReader','welcome','documents.webp'));
-for(const [name,app,icon] of [['陆遥','CaseChat','wechat.png'],['芦苇搜索','CaseSearch','chromium.webp'],['调查便签','CaseNotes','tinymce.webp'],['空间复核','CaseSpace','executable.webp']])await put(`public/Users/Public/Start Menu/调查工具/${name}.url`,shortcut(app,'',icon));
-await put('public/session.json',JSON.stringify({aiEnabled:false,wallpaperImage:'GALAXY',themeName:'defaultTheme',windowStates:{}},null,2));
+for(const [name,app,icon] of [['陆遥','CaseChat','echo.svg'],['芦苇搜索','CaseSearch','compass.svg'],['调查便签','CaseNotes','margin.svg'],['空间复核','CaseSpace','executable.webp']])await put(`public/Users/Public/Start Menu/调查工具/${name}.url`,shortcut(app,'',icon));
+await put('public/session.json',JSON.stringify({aiEnabled:false,wallpaperImage:'/System/Wallpapers/wallpaper.png',themeName:'defaultTheme',windowStates:{}},null,2));
 const directory=(await fs.readFile(path.join(root,'contexts/process/directory.ts'),'utf8')).replace(/^  Case(?:Chat|Notes|Search|Reader|Space):[^\n]*\n/gm,'');
-const defs=[['CaseChat','微信','wechat.png',740,640],['CaseNotes','调查便签','tinymce.webp',640,760],['CaseSearch','芦苇搜索','chromium.webp',880,640],['CaseReader','影像查看器','photo.webp',920,720],['CaseSpace','空间复核 · HC-19-041','executable.webp',1000,700]].map(([id,title,icon,width,height])=>`  ${id}: { Component: dynamic(() => import("components/apps/CaseApp")), defaultSize: {width:${width},height:${height}},icon:"/System/Icons/${icon}",title:"${title}",backgroundColor:"#f7f8fa",singleton:true },`).join('\n');
+const defs=[['CaseChat','陆遥','echo.svg',740,640],['CaseNotes','调查便签','margin.svg',640,760],['CaseSearch','芦苇搜索','compass.svg',880,640],['CaseReader','影像查看器','photo.webp',920,720],['CaseSpace','空间复核 · HC-19-041','executable.webp',1000,700]].map(([id,title,icon,width,height])=>`  ${id}: { Component: dynamic(() => import("components/apps/CaseApp")), defaultSize: {width:${width},height:${height}},icon:"/System/Icons/${icon}",title:"${title}",backgroundColor:"#f7f8fa",singleton:true },`).join('\n');
 let dirSrc=directory.replace('const directory: Processes = {','const directory: Processes = {\n'+defs);
 dirSrc=dirSrc.replace(/(FileExplorer: \{[\s\S]{0,220}?width: )\d+,/,'$1390,');
 await put('contexts/process/directory.ts',dirSrc);

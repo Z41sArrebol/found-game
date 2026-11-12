@@ -33,5 +33,35 @@
     "key": "entrance",
     "prompt": "Use case: photorealistic-natural. ONE landscape 16:10 mundane contemporary Chinese old apartment entrance evidence photograph. View from a plain shared residential landing into an open brown wooden apartment door. Distinct from a green hotel emergency exit. In foreground left a cream cast iron radiator pipe is the outside anchor with a bright orange thin survey cord tied securely around it. A small blue tape band marks the cord at its start near the radiator. The orange cord continues unbroken across grey tile floor, through the open brown entrance doorway, into modest empty rental interior. At bottom of the wooden door a clearly visible BLUE RUBBER DOOR WEDGE keeps door open. Beside frame a small white maintenance sticker with tiny 2026 date, no other text. Daylight, normal no horror, documentary factual camera, no people, no creatures, no cinematic lighting, no UI. All three key details radiator anchor, orange cord, blue door wedge must be visibly identifiable. Sharp photograph.",
     "mode": "built-in generate"
+  },
+  {
+    "key": "trace",
+    "prompt": "Use case: photorealistic-natural. Create ONE landscape 16:10 handheld smartphone documentary evidence photograph taken in a dim, shabby old Chinese apartment corridor, uneven flashlight illumination. On the mottled off-white and faded green lower plaster wall near the corner, faint hasty handwritten Chinese pencil text reads \"站起来以后，窗又到前面去了\" in small ordinary handwriting. On the dusty cream tile floor right below the wall sits a crumpled red paper takeout bag with twisted paper handles (matching the red bag from the apartment desk). An orange thin survey cord passes across the bottom edge of the floor. Mundane, unsettling factual evidence photo, no people, no monsters, no blood, no gore, no cinematic filters, no UI.",
+    "mode": "built-in generate"
+  },
+  {
+    "key": "rope",
+    "prompt": "Use case: photorealistic-natural. Create ONE landscape 16:10 close-up documentary evidence photograph of a dark grey canvas survey equipment bag open on a concrete floor. Inside and beside the bag are two distinct segments of orange survey cord: on the left, a short, frayed, dirty 2019 broken orange cord segment with a severed end, and wrapped around its metal clip is a faded pale-blue elastic hair tie; on the right, a clean, continuous new orange survey cord spooling out from the bag with a small blue tape marker. Factual overhead handheld photo, neutral indoor lighting, sharp focus on the faded blue hair tie and frayed cord end, no people, no text, no UI.",
+    "mode": "built-in generate"
+  },
+  {
+    "key": "cup-hand",
+    "prompt": "Edit target: the attached room.png photograph. Keep the exact same camera framing and room geometry. Place a simple white ceramic cup on the near window sill (left-center). In the distant window across the courtyard, show a pale, slightly awkward human-like forearm and hand reaching UPWARD from underneath the distant desk (where a standing person could not possibly fit), placing an identical white ceramic cup onto the distant window sill. The wrist is stiff and unnaturally angled. Slight 2019 digital video compression grain. No monster face, no blood, no gore—just an impossible, quiet anatomical angle in the distant window.",
+    "mode": "built-in edit"
+  },
+  {
+    "key": "wallpaper",
+    "prompt": "Use case: photorealistic-natural. Create ONE landscape 16:10 casual smartphone travel photograph taken on a bright afternoon in an ordinary Chinese coastal or riverside small town. Slightly overexposed sky, natural smartphone camera dynamic range, a quiet concrete promenade or old stone bridge in the foreground, calm water, and a cluster of aging 6-storey residential apartment buildings in the mid-background against low hills. Unedited everyday snapshot sent by a friend, warm and mundane, no people posing in foreground, no text, no watermarks, no UI. All details in the background apartment windows should be dark or unlit normal daytime glass.",
+    "mode": "built-in generate"
+  },
+  {
+    "key": "wallpaper-stage9",
+    "prompt": "Edit target: the attached wallpaper.png photograph. Preserve the entire image, framing, lighting, sky, and textures 100% identically. In ONE single window on the top floor of the background residential apartment building, add a subtle, warm yellow desk lamp glow visible inside the dark window, with a tiny faint silhouette of a gooseneck desk lamp and a blue towel on the sill. Everything else must remain completely unchanged. Subtle enough that only a careful observer notices.",
+    "mode": "built-in edit"
+  },
+  {
+    "key": "street",
+    "prompt": "Use case: photorealistic-natural. Create ONE landscape 16:10 slightly tilted handheld smartphone photograph of an ordinary Chinese residential street intersection at dusk/late afternoon, taken hurriedly while walking. Wet asphalt or worn sidewalk in foreground, a few parked scooters, old street trees, normal warm streetlamp and shop sign glow in the distance, and the blurred taillight of a car driving away at the right edge of the frame. A mundane, relieving snapshot after escaping indoors. No horror, no text, no UI.",
+    "mode": "built-in generate"
   }
 ]

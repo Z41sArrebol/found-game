@@ -1,25 +1,32 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {fresh,hydrate,flag,visit,missing,resolve,resolveInput,search,rescue} from '../dist/engine.js';
-import {docs,puzzles} from '../dist/content.js';
-
-test('wrong conclusions and missing evidence cannot advance the investigation',()=>{
- const s=fresh();assert.equal(resolve(s,1).reason,'evidence');flag(s,'inspect-window');assert.equal(resolve(s,0).reason,'wrong');assert.equal(s.stage,0);assert.equal(resolve(s,1).ok,true);assert.equal(s.stage,1);
-});
-test('all main investigation nodes are reachable with their actual evidence requirements',()=>{
- const s=fresh();for(let i=0;i<11;i++){assert.equal(s.stage,i);for(const item of puzzles[i].requires){if(docs.some(d=>d.id===item))visit(s,item);else flag(s,item)}assert.equal(missing(s).length,0);const r=puzzles[i].input?resolveInput(s,puzzles[i].input.accept[0]):resolve(s,puzzles[i].answer);assert.equal(r.ok,true,'node '+i)}assert.equal(s.stage,11);for(const item of puzzles[11].requires)visit(s,item);assert.equal(rescue(s,0).ok,true);assert.equal(rescue(s,0).ok,false);assert.equal(s.rescue,1);assert.equal(rescue(s,1).ok,true);assert.equal(rescue(s,2).done,true);assert.equal(s.ending,'safe');assert.equal(resolve(s,1).reason,'ending');
-});
-test('progress and personal notes survive save/restore',()=>{
- const s=fresh();s.started=true;flag(s,'inspect-window');resolve(s,1);visit(s,'ad');s.personal='还不能判断窗外是什么';const restored=hydrate(JSON.stringify(s));assert.equal(restored.stage,1);assert.deepEqual(restored.seen,['ad']);assert.equal(restored.personal,s.personal);assert.ok(restored.flags.includes('inspect-window'));
-});
-test('invalid and damaged saves recover to a playable opening',()=>{
- for(const raw of ['{',null,'null','{"version":1,"stage":99}','{"version":8,"stage":2}'])assert.equal(hydrate(raw).stage,0);
- const s=hydrate({version:1,stage:3,seen:['nonexistent','mail'],flags:null,history:null,notes:null,messages:null});assert.deepEqual(s.seen,['mail']);assert.deepEqual(s.flags,[]);assert.deepEqual(s.messages,[]);
-});
-test('visible names and approximate compound searches find their intended sources',()=>{
- const cases=[['安顺宽带','ad'],['松亭 外墙','exterior'],['松亭户型','plan'],['陈苇','notes'],['沈屹 窗外','ceiling'],['HC-19-041','company'],['R-03','experiment'],['撤回 测绳','experiment']];for(const [q,id] of cases)assert.ok(search(q).slice(0,5).some(d=>d.id===id),q+' should find '+id);assert.deepEqual(search('不存在的煎饼宇宙'),[]);
-});
-test('save reloading does not duplicate evidence and flags',()=>{const s=fresh();visit(s,'mail');visit(s,'mail');flag(s,'matched');flag(s,'matched');assert.equal(s.seen.length,1);assert.equal(s.flags.length,1)});
-test('each puzzle has available evidence and valid options',()=>{for(const p of puzzles){for(const id of p.requires)assert.ok(docs.some(d=>d.id===id)||['inspect-window','inspect-label','cup-played','matched','registered','trial-paused','trial-active','ceiling-played'].includes(id),id);if(p.options)assert.ok(p.answer>=0&&p.answer<p.options.length)}});
-test('input puzzles gate on evidence and accept normalized answers',()=>{
- const s=fresh();s.stage=1;assert.equal(resolveInput(s,'三号楼').reason,'evidence');visit(s,'ad');flag(s,'inspect-label');assert.equal(resolveInput(s,'随便说说').ok,false);assert.equal(resolveInput(s,' ２ 号 楼 ').ok,true);assert.equal(s.stage,2);assert.equal(resolveInput(s,'二号楼').reason,'noinput')});
+import * as E from '../dist/engine.js';
+import {docs,puzzles,chatReplies} from '../dist/content.js';
+import {projectToSegment} from '../dist/rescue.js';
+function ready(s){if(s.stage===10)E.unlock(s,'qingwei_1107');for(const id of puzzles[s.stage].requires){if(docs.some(d=>d.id===id))E.visit(s,id);else E.flag(s,id)}}
+function cite(s,ids){for(const id of ids)E.collect(s,id,'原文 '+id);const r=E.resolveCite(s,ids);s.evidence=[];return r}
+function route(){
+ const s=E.fresh();E.flag(s,'room-viewed');for(const id of ['far-lamp','far-towel','far-bag'])E.mark(s,id);assert.equal(s.stage,1);
+ ready(s);assert.ok(E.resolveInput(s,'２号楼').ok);assert.equal(s.stage,2);
+ ready(s);assert.ok(cite(s,['plan:west-wall','exterior:photo']).ok);assert.equal(s.stage,3);
+ ready(s);assert.ok(E.resolve(s,['observe','bag','test','retreat','meeting']).ok);assert.equal(s.stage,4);
+ ready(s);assert.ok(E.resolveInput(s,'两秒').partial);assert.equal(s.stage,4);assert.ok(cite(s,['cup:hand']).ok);assert.equal(s.stage,5);
+ ready(s);assert.ok(E.match(s,[2,0,1]).ok);assert.equal(s.stage,6);
+ ready(s);assert.ok(E.register(s,'corridor').ok);assert.equal(s.stage,7);assert.equal(s.linkActive,true);
+ E.toggleLink(s);E.toggleLink(s);ready(s);assert.ok(cite(s,['trial:paused','trial:active']).ok);assert.equal(s.stage,8);
+ ready(s);assert.ok(cite(s,['green:inspection','entrance:markers']).ok);assert.equal(s.stage,9);
+ ready(s);assert.ok(E.resolveInput(s,'11-20').ok);assert.equal(s.stage,10);
+ ready(s);assert.ok(E.resolve(s,['return','broken','closed']).ok);assert.equal(s.stage,11);ready(s);return s;
+}
+test('12 nodes use their intended mechanics and are reachable',()=>{const s=route();assert.ok(E.rescue(s,0).ok);assert.equal(E.rescue(s,0).ok,false);assert.ok(E.rescue(s,1).ok);assert.equal(E.rescue(s,2).ok,false);E.flag(s,'outside-confirmed');assert.ok(E.rescue(s,2).done);assert.equal(s.ending,null);assert.ok(E.finishRescue(s).ok);assert.equal(s.ending,'safe')});
+test('cite requires visited sources, collected units and every group',()=>{const s=E.fresh();s.stage=2;assert.equal(E.resolveCite(s,['plan:west-wall','exterior:photo']).reason,'evidence');ready(s);assert.equal(E.resolveCite(s,['plan:west-wall','exterior:photo']).reason,'evidence');E.collect(s,'plan:west-wall','西墙');E.collect(s,'exterior:caption','西侧顶层');assert.equal(E.resolveCite(s,['plan:west-wall']).ok,false);assert.equal(s.stage,2);assert.equal(E.resolveCite(s,['plan:west-wall','exterior:caption']).ok,true);assert.deepEqual(s.history[0].citations.map(x=>x.text),['西墙','西侧顶层'])});
+test('wrong citations rotate feedback and enable hints after two errors',()=>{const s=E.fresh();s.stage=2;ready(s);E.collect(s,'notes:0','随手记');const a=E.resolveCite(s,['notes:0']),b=E.resolveCite(s,['notes:0']);assert.notEqual(a.message,b.message);assert.equal(s.errors[2],2);assert.equal(s.hints[2],1);assert.equal(s.stage,2)});
+test('evidence tray deduplicates and caps at eight, no uncollected IDs accepted',()=>{const s=E.fresh();for(let i=0;i<8;i++)assert.ok(E.collect(s,'x:'+i,'句子').ok);assert.ok(E.collect(s,'x:0','句子').ok);assert.equal(E.collect(s,'x:8','句子').ok,false);assert.equal(s.evidence.length,8)});
+test('v1 migration preserves every stage and personal notes',()=>{for(let stage=0;stage<12;stage++){const s=E.hydrate({version:1,stage,personal:'我的记录',seen:['mail'],flags:['inspect-window'],notes:[],messages:[],history:[]});assert.equal(s.version,2);assert.equal(s.stage,stage);assert.equal(s.personal,'我的记录');assert.deepEqual(s.evidence,[])}});
+test('damaged save restores safely',()=>{for(const raw of ['{',null,'null','{"version":1,"stage":99}','{"version":8,"stage":2}'])assert.equal(E.hydrate(raw).stage,0);const s=E.hydrate({version:2,stage:3,seen:['fake','mail'],flags:null,history:null,messages:null,evidence:[null]});assert.deepEqual(s.seen,['mail']);assert.deepEqual(s.messages,[]);assert.deepEqual(s.evidence,[])});
+test('input accepts exact normalized answers and rejects negations',()=>{for(const answer of ['11月20日','11.20','11-20','20号']){const s=E.fresh();s.stage=9;ready(s);assert.equal(E.resolveInput(s,'不是'+answer).ok,false);assert.ok(E.resolveInput(s,answer).ok)}for(const answer of ['2','2秒','两秒','约2秒']){const s=E.fresh();s.stage=4;ready(s);assert.equal(E.resolveInput(s,'12秒').ok,false);assert.ok(E.resolveInput(s,answer).ok);assert.equal(s.stage,4)}});
+test('R-03 is not readable until password unlock; raw originals remain stable',()=>{const s=E.fresh(),original=JSON.stringify(docs);E.visit(s,'experiment');assert.equal(E.known(s,'experiment'),false);assert.equal(E.unlock(s,'wrong').ok,false);assert.ok(E.unlock(s,'qingwei_1107').ok);assert.ok(E.known(s,'experiment'));E.visit(s,'trace');assert.equal(E.known(s,'trace'),false);route();assert.equal(JSON.stringify(docs),original)});
+test('safe-marked requires the three Chen Wei records; bad checkpoint is recoverable',()=>{const s=route();E.completeMap(s,2);assert.equal(s.ending,'bad');assert.equal(s.terminalCount,2);const back=E.hydrate(s.checkpoint);assert.equal(back.ending,null);assert.equal(back.stage,11);back.rescue=3;assert.equal(E.finishRescue(back,true).ok,false);E.visit(back,'trace');assert.ok(E.canMarkRope(back));assert.ok(E.finishRescue(back,true).ok);assert.equal(back.ending,'safe-marked')});
+test('no three-choice conclusion puzzles remain; late replies stay short',()=>{for(const p of puzzles)assert.equal(p.options,undefined);for(const kind of ['objective','status'])for(const p of chatReplies[kind].slice(6))for(const v of p.v){assert.ok(v.length<=15,v);assert.ok(!/因为|所以|说明|证明/.test(v),v)}});
+test('search finds clues without depending on exact queries',()=>{for(const [q,id] of [['安顺宽带','ad'],['松亭 外墙','exterior'],['松亭户型','plan'],['陈苇','notes'],['沈屹 窗外','ceiling'],['HC-19-041','company'],['R-03','experiment']])assert.ok(E.search(q).slice(0,5).some(d=>d.id===id),q);assert.deepEqual(E.search('不存在的煎饼宇宙'),[])});
+test('rope projection is clamped and provides recoverable distance',()=>{assert.deepEqual(projectToSegment([.5,0],[0,0],[1,0]),{t:.5,distance:0});assert.equal(projectToSegment([2,0],[0,0],[1,0]).t,1);assert.equal(projectToSegment([.5,.1],[0,0],[1,0]).distance,.1)});
